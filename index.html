@@ -6,23 +6,23 @@
     <title>CONE SPECTRUM ―色再現ラボ―</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter & JetBrains Mono & Noto Sans JP -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #060a12;
-            --panel-bg: rgba(15, 23, 42, 0.82);
+            --bg-dark: #070b14;
+            --panel-bg: rgba(15, 23, 42, 0.80);
         }
 
         body {
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
             background-color: var(--bg-dark);
-            background-image:
-                radial-gradient(circle at 20% 10%, rgba(56, 189, 248, 0.09) 0%, transparent 45%),
-                radial-gradient(circle at 80% 90%, rgba(244, 63, 94, 0.08) 0%, transparent 45%),
-                linear-gradient(to bottom, #060a12, #0b1120);
+            background-image: 
+                radial-gradient(circle at 18% 12%, rgba(56, 189, 248, 0.09) 0%, transparent 42%),
+                radial-gradient(circle at 82% 88%, rgba(168, 85, 247, 0.09) 0%, transparent 42%),
+                linear-gradient(to bottom, #070b14, #0b1120);
             color: #f8fafc;
             overflow-x: hidden;
             user-select: none;
@@ -33,71 +33,90 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
+        /* ガラスモーフィズムパネル */
         .lab-panel {
             background: var(--panel-bg);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(148, 163, 184, 0.16);
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
         }
 
         /* 網膜フラッシュエフェクト */
         @keyframes retinaFlash {
-            0% { opacity: 0.72; }
+            0% { opacity: 0.65; }
             100% { opacity: 0; }
         }
         .flash-overlay {
-            animation: retinaFlash 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: retinaFlash 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             pointer-events: none;
         }
 
-        /* 照射ボタンのネオングロー＆即時反応スタイル */
+        /* 照射ボタンのネオングロー */
         .irradiate-btn {
             background: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #4f46e5 100%);
-            box-shadow: 0 0 24px rgba(37, 99, 235, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-            touch-action: manipulation;
-            transition: transform 0.06s ease, box-shadow 0.12s ease, filter 0.12s ease;
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+            transition: transform 0.08s ease, box-shadow 0.15s ease, filter 0.15s ease;
         }
         .irradiate-btn:hover:not(:disabled) {
             filter: brightness(1.1);
-            box-shadow: 0 0 32px rgba(56, 189, 248, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.55);
+            box-shadow: 0 0 28px rgba(56, 189, 248, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.5);
         }
         .irradiate-btn:active:not(:disabled) {
             transform: scale(0.96);
         }
         .irradiate-btn:disabled {
-            opacity: 0.4;
+            opacity: 0.45;
             cursor: not-allowed;
             box-shadow: none;
         }
 
-        /* スコアアタックボタンのプレミアムグラデーション */
-        .score-attack-btn {
-            background: linear-gradient(135deg, #d97706 0%, #ea580c 50%, #e11d48 100%);
-            box-shadow: 0 0 22px rgba(234, 88, 12, 0.42), inset 0 1px 1px rgba(255, 255, 255, 0.35);
-            touch-action: manipulation;
-            transition: transform 0.08s ease, box-shadow 0.15s ease, filter 0.15s ease;
+        /* 練習モードボタン（鮮やかな青） */
+        .btn-practice-mode {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #0ea5e9 100%);
+            color: #ffffff;
+            border: 1px solid rgba(125, 211, 252, 0.55);
+            box-shadow: 0 0 22px rgba(59, 130, 246, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            transition: transform 0.1s ease, box-shadow 0.2s ease, filter 0.2s ease;
         }
-        .score-attack-btn:hover {
-            filter: brightness(1.08);
-            box-shadow: 0 0 30px rgba(245, 158, 11, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+        .btn-practice-mode:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.72), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+            transform: translateY(-1px);
         }
-        .score-attack-btn:active {
+        .btn-practice-mode:active {
             transform: scale(0.97);
         }
 
-        /* ランク文字スタイル */
+        /* スコアアタックモードボタン */
+        .btn-scoreattack-mode {
+            background: linear-gradient(135deg, #f59e0b 0%, #ea580c 52%, #db2777 100%);
+            color: #ffffff;
+            border: 1px solid rgba(253, 224, 71, 0.45);
+            box-shadow: 0 0 22px rgba(234, 88, 12, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            transition: transform 0.1s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        }
+        .btn-scoreattack-mode:hover {
+            filter: brightness(1.08);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.68), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+            transform: translateY(-1px);
+        }
+        .btn-scoreattack-mode:active {
+            transform: scale(0.97);
+        }
+
+        /* ランクバッジの輝き */
         .rank-s {
             background: linear-gradient(135deg, #fde047, #f59e0b, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.55));
+            filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.5));
         }
         .rank-a {
             background: linear-gradient(135deg, #38bdf8, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.45));
+            filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.4));
         }
         .rank-b {
             color: #34d399;
@@ -124,203 +143,266 @@
     <!-- 網膜フラッシュオーバーレイ -->
     <div id="retina-flash" class="fixed inset-0 z-40 hidden"></div>
 
+    <!-- シェア完了トースト通知 -->
+    <div id="share-toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[60] hidden items-center gap-2 px-4 py-2.5 rounded-full bg-slate-900/95 border border-sky-400/50 text-sky-200 text-xs font-bold shadow-2xl backdrop-blur-md">
+        <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+        </svg>
+        <span id="share-toast-text">結果画像を保存し、シェア文とURLをコピーしました！</span>
+    </div>
+
     <!-- ==========================================
-         タイトル画面（シンプル＆コラム搭載）
+         タイトル画面（シンプル構成）
          ========================================== -->
-    <div id="title-screen" class="min-h-screen flex flex-col items-center justify-center px-4 py-8 relative z-20">
-        <div class="max-w-md w-full flex flex-col items-center text-center">
-            
-            <!-- SVGロゴ（3錐体の加法混色シンボル） -->
-            <div class="w-20 h-20 rounded-3xl bg-slate-900/90 border border-slate-700/80 flex items-center justify-center shadow-2xl mb-5 relative overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-tr from-sky-500/10 via-transparent to-rose-500/10"></div>
-                <svg class="w-12 h-12" viewBox="0 0 24 24" fill="none">
-                    <circle cx="9" cy="14.5" r="5.5" fill="#3b82f6" fill-opacity="0.82"/>
-                    <circle cx="15" cy="14.5" r="5.5" fill="#22c55e" fill-opacity="0.82"/>
-                    <circle cx="12" cy="9" r="5.5" fill="#ef4444" fill-opacity="0.82"/>
+    <div id="title-screen" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex flex-col items-center justify-center p-4 overflow-y-auto">
+        <div class="max-w-md w-full flex flex-col items-center text-center my-auto py-4">
+            <!-- ロゴSVG：RGB（赤・緑・青）ベン図・加法混色（中央純白） -->
+            <div class="w-28 h-28 sm:w-32 sm:h-32 mb-4 rounded-3xl bg-slate-950 border border-slate-700/80 shadow-[0_0_40px_rgba(255,255,255,0.12)] flex items-center justify-center relative overflow-hidden">
+                <svg class="w-24 h-24 sm:w-28 sm:h-28" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="coreWhiteGlow" cx="50%" cy="52%" r="35%">
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+                            <stop offset="65%" stop-color="#ffffff" stop-opacity="0.35"/>
+                            <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+                        </radialGradient>
+                        <clipPath id="venn-r-clip">
+                            <circle cx="60" cy="44" r="30"/>
+                        </clipPath>
+                        <clipPath id="venn-g-clip">
+                            <circle cx="46" cy="70" r="30"/>
+                        </clipPath>
+                    </defs>
+
+                    <!-- 背景の微細スペクトルリング -->
+                    <circle cx="60" cy="59" r="50" stroke="rgba(148,163,184,0.18)" stroke-width="1" stroke-dasharray="3 3"/>
+
+                    <!-- 加法混色（screenブレンド）によるRGB 3円ベン図 -->
+                    <g style="isolation: isolate;">
+                        <!-- 赤 (Red: #ff3b3b) -->
+                        <circle cx="60" cy="44" r="30" fill="#ff3b3b" style="mix-blend-mode: screen;"/>
+                        <!-- 緑 (Green: #22e559) -->
+                        <circle cx="46" cy="70" r="30" fill="#22e559" style="mix-blend-mode: screen;"/>
+                        <!-- 青 (Blue: #3b82f6) -->
+                        <circle cx="74" cy="70" r="30" fill="#3b82f6" style="mix-blend-mode: screen;"/>
+
+                        <!-- 3円がすべて重なる中央のルーローの三角形領域を純白(#ffffff)で確実に強調 -->
+                        <g clip-path="url(#venn-r-clip)">
+                            <g clip-path="url(#venn-g-clip)">
+                                <circle cx="74" cy="70" r="30" fill="#ffffff"/>
+                            </g>
+                        </g>
+                    </g>
+
+                    <!-- 中央白コアの柔らかい発光ハロー -->
+                    <circle cx="60" cy="61" r="14" fill="url(#coreWhiteGlow)"/>
+
+                    <!-- 各円の繊細なアウトライン -->
+                    <circle cx="60" cy="44" r="30" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+                    <circle cx="46" cy="70" r="30" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+                    <circle cx="74" cy="70" r="30" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
                 </svg>
             </div>
 
-            <!-- メインタイトル＆副題 -->
-            <h1 class="text-3xl sm:text-4xl font-black tracking-wider bg-gradient-to-r from-sky-400 via-indigo-300 to-rose-400 bg-clip-text text-transparent">
+            <!-- タイトル＆副題 -->
+            <h1 class="text-3xl sm:text-4xl font-black tracking-wider bg-gradient-to-r from-rose-400 via-emerald-300 to-sky-400 bg-clip-text text-transparent">
                 CONE SPECTRUM
             </h1>
-            <p class="text-sm sm:text-base font-bold text-slate-300 tracking-widest mt-1">
+            <p class="text-sm sm:text-base font-bold text-slate-300 tracking-widest mt-1 mb-3">
                 ―色再現ラボ―
             </p>
-
-            <!-- 簡潔な説明文 -->
-            <p class="text-xs sm:text-sm text-slate-400 mt-4 mb-7 leading-relaxed">
+            <p class="text-xs sm:text-sm text-slate-300 mb-6">
                 光の波長を調節し、お題の色を再現しよう！
             </p>
 
-            <!-- モード選択ボタン群 -->
-            <div class="w-full flex flex-col gap-3.5 mb-6">
-                <!-- 練習モードボタン -->
-                <button id="btn-mode-practice" class="w-full py-4 px-5 rounded-2xl irradiate-btn text-white flex flex-col items-center justify-center shadow-lg">
-                    <span class="text-base sm:text-lg font-extrabold tracking-wider">練習モード</span>
-                    <span class="text-[11px] text-sky-100/85 mt-0.5">やり直し自由・制限なしで様々な色を再現</span>
+            <!-- モード選択ボタン -->
+            <div class="w-full flex flex-col gap-3 mb-4">
+                <button id="btn-mode-practice" class="btn-practice-mode w-full py-3.5 px-5 rounded-2xl font-extrabold text-base tracking-wide flex flex-col items-center justify-center">
+                    <span>練習モード</span>
+                    <span class="text-[11px] font-medium text-sky-100/90 mt-0.5">やり直し自由・無制限トレーニング</span>
                 </button>
 
-                <!-- スコアアタックモードボタン（中にハイスコアを表示） -->
-                <button id="btn-mode-score" class="w-full py-4 px-5 rounded-2xl score-attack-btn text-white flex flex-col items-center justify-center shadow-lg relative overflow-hidden">
-                    <span class="text-base sm:text-lg font-extrabold tracking-wider">スコアアタック</span>
-                    <div class="flex items-center justify-center gap-2 mt-1">
-                        <span class="text-[11px] text-amber-100/90">全3ステージ・一発勝負</span>
-                        <span class="text-amber-200/60 text-xs">|</span>
-                        <span class="font-mono-tech text-xs sm:text-sm font-extrabold bg-black/30 px-2.5 py-0.5 rounded-full border border-amber-200/30 text-amber-200">
-                            HIGH SCORE: <span id="title-high-score">0</span> pts
-                        </span>
-                    </div>
-                </button>
-            </div>
-
-            <!-- 詳しい解説アコーディオン（錐体細胞に関するコラムのみ） -->
-            <div class="w-full lab-panel rounded-2xl overflow-hidden text-left border border-slate-800">
-                <button id="btn-toggle-column" class="w-full px-4 py-3.5 flex items-center justify-between text-xs sm:text-sm font-bold text-slate-200 hover:bg-slate-800/50 transition">
-                    <span class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-sky-400"></span>
-                        詳しい解説：錐体細胞と色の見え方コラム
+                <button id="btn-mode-scoreattack" class="btn-scoreattack-mode w-full py-3.5 px-5 rounded-2xl font-extrabold text-base tracking-wide flex flex-col items-center justify-center">
+                    <span>スコアアタック</span>
+                    <span id="title-highscore-badge" class="text-[11px] font-mono-tech font-bold text-amber-100 mt-0.5">
+                        全3ステージ制 ｜ HIGH SCORE: <span id="title-highscore">0</span> pts
                     </span>
-                    <svg id="column-chevron" class="w-4 h-4 text-slate-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
                 </button>
-
-                <div id="column-content" class="hidden px-4 pb-4 pt-1 border-t border-slate-800/80 space-y-3 text-xs text-slate-300 leading-relaxed">
-                    <div>
-                        <h3 class="font-bold text-sky-400 mb-1">👁️ 3種類の錐体細胞（S・M・L錐体）</h3>
-                        <p class="text-slate-300">
-                            人間の網膜には、光の波長に対する感度（作用スペクトル）が異なる3つの視細胞があり、それぞれRGB（青・緑・赤）の役割を担っています。
-                        </p>
-                        <div class="grid grid-cols-3 gap-1.5 mt-2 text-center text-[11px]">
-                            <div class="bg-sky-950/50 border border-sky-500/30 rounded-xl p-2">
-                                <div class="font-bold text-sky-400">S錐体 (青)</div>
-                                <div class="text-slate-400 text-[10px]">短波長に反応<br>ピーク ~435nm</div>
-                            </div>
-                            <div class="bg-emerald-950/50 border border-emerald-500/30 rounded-xl p-2">
-                                <div class="font-bold text-emerald-400">M錐体 (緑)</div>
-                                <div class="text-slate-400 text-[10px]">中波長に反応<br>ピーク ~532nm</div>
-                            </div>
-                            <div class="bg-rose-950/50 border border-rose-500/30 rounded-xl p-2">
-                                <div class="font-bold text-rose-400">L錐体 (赤)</div>
-                                <div class="text-slate-400 text-[10px]">長波長に反応<br>ピーク ~582nm</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
-                        <h3 class="font-bold text-amber-300 mb-1">💡 なぜ単一の光で「黄色」や「シアン」が見えるの？</h3>
-                        <p class="text-slate-300">
-                            M錐体（緑）とL錐体（赤）の感度曲線は大きく重なっています。そのため<strong class="text-amber-300">575nm付近の単色光</strong>が目に入ると、L錐体とM錐体の両方が同時に強く興奮し、脳はそれを「黄色」として知覚します。同様に、<strong class="text-cyan-300">485nm付近の光</strong>ではS錐体とM錐体が同時に反応するため「シアン（水色）」に見えるのです。
-                        </p>
-                    </div>
-                </div>
             </div>
+
+            <!-- 詳しい解説ボタン -->
+            <button id="btn-open-column" class="px-4 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-xs font-semibold text-slate-300 transition flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>詳しい解説（錐体細胞コラム）</span>
+            </button>
         </div>
     </div>
 
     <!-- ==========================================
-         プレイ画面（シンプル構成）
+         プレイ画面
          ========================================== -->
-    <div id="game-screen" class="hidden min-h-screen flex-col justify-between">
-        
-        <!-- ヘッダー（左上タイトル＆副題、右上サウンド切替） -->
-        <header class="w-full border-b border-slate-800/80 bg-slate-950/75 backdrop-blur-md sticky top-0 z-30">
-            <div class="max-w-4xl mx-auto px-4 py-2.5 flex items-center justify-between">
+    <div id="game-screen" class="min-h-screen hidden flex-col justify-between">
+        <!-- ヘッダー -->
+        <header class="w-full border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-md sticky top-0 z-30">
+            <div class="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700/80 flex items-center justify-center shadow-inner">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                            <circle cx="9" cy="14.5" r="5.5" fill="#3b82f6" fill-opacity="0.82"/>
-                            <circle cx="15" cy="14.5" r="5.5" fill="#22c55e" fill-opacity="0.82"/>
-                            <circle cx="12" cy="9" r="5.5" fill="#ef4444" fill-opacity="0.82"/>
+                    <!-- ヘッダーミニロゴ（RGBベン図・中央純白） -->
+                    <div class="w-9 h-9 rounded-xl bg-slate-950 border border-slate-700/80 flex items-center justify-center shadow-inner relative overflow-hidden shrink-0">
+                        <svg class="w-7 h-7" viewBox="0 0 40 40" fill="none">
+                            <defs>
+                                <clipPath id="mini-r"><circle cx="20" cy="14.5" r="10"/></clipPath>
+                                <clipPath id="mini-g"><circle cx="15.2" cy="23.2" r="10"/></clipPath>
+                            </defs>
+                            <g style="isolation: isolate;">
+                                <circle cx="20" cy="14.5" r="10" fill="#ff3b3b" style="mix-blend-mode: screen;"/>
+                                <circle cx="15.2" cy="23.2" r="10" fill="#22e559" style="mix-blend-mode: screen;"/>
+                                <circle cx="24.8" cy="23.2" r="10" fill="#3b82f6" style="mix-blend-mode: screen;"/>
+                                <g clip-path="url(#mini-r)">
+                                    <g clip-path="url(#mini-g)">
+                                        <circle cx="24.8" cy="23.2" r="10" fill="#ffffff"/>
+                                    </g>
+                                </g>
+                            </g>
                         </svg>
                     </div>
                     <div>
-                        <div class="text-sm sm:text-base font-black tracking-wider bg-gradient-to-r from-sky-400 via-indigo-300 to-rose-400 bg-clip-text text-transparent leading-none">
+                        <h1 class="text-sm sm:text-base font-extrabold tracking-wider bg-gradient-to-r from-rose-400 via-emerald-300 to-sky-400 bg-clip-text text-transparent">
                             CONE SPECTRUM
-                        </div>
-                        <div class="text-[10px] sm:text-xs font-bold text-slate-400 tracking-wider mt-0.5">
-                            ―色再現ラボ―
-                        </div>
+                        </h1>
+                        <p class="text-[10px] sm:text-xs text-slate-400 tracking-wide">―色再現ラボ―</p>
                     </div>
                 </div>
 
-                <!-- ミュート切替ボタン -->
-                <button id="btn-mute" class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/60 transition" title="音声オン/オフ">
-                    <svg id="icon-sound-on" class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
-                    </svg>
-                    <svg id="icon-sound-off" class="w-4 h-4 text-slate-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
-                    </svg>
-                </button>
+                <div class="flex items-center gap-2">
+                    <!-- スコアアタック時のみ表示する現在スコア＆ハイスコア -->
+                    <div id="header-score-box" class="hidden items-center gap-2 bg-slate-900/90 border border-slate-700/80 px-3 py-1.5 rounded-xl font-mono-tech text-xs">
+                        <span class="text-amber-300 font-bold">SCORE: <span id="play-current-score">0</span></span>
+                        <span class="text-slate-600">|</span>
+                        <span class="text-sky-300 font-bold">HIGH: <span id="play-high-score">0</span></span>
+                    </div>
+
+                    <!-- サウンドミュートボタン -->
+                    <button id="btn-mute" class="p-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-slate-300 transition" aria-label="サウンド切替">
+                        <svg id="icon-sound-on" class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                        </svg>
+                        <svg id="icon-sound-off" class="w-4 h-4 text-slate-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </header>
 
         <!-- メインプレイエリア -->
-        <main class="flex-1 max-w-4xl w-full mx-auto px-3 sm:px-5 py-3 sm:py-5 flex flex-col gap-3.5 sm:gap-4 justify-center">
-
-            <!-- 上部：STAGE番号・スコア（スコアアタック時のみ）＆お題の色と名前のみ -->
+        <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-4 sm:py-6 flex flex-col justify-between gap-4">
+            
+            <!-- 上部：STAGE番号（スコアアタック時のみ）＋ お題の色と名前のみ -->
             <section class="lab-panel rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center">
-                <!-- スコアアタック時のみ表示されるステージ＆スコア＋ハイスコアバー -->
-                <div id="score-attack-hud" class="hidden w-full max-w-md flex items-center justify-between bg-slate-900/90 px-3.5 py-1.5 rounded-xl border border-slate-800 mb-3 text-xs">
-                    <span id="stage-label" class="font-mono-tech font-bold text-sky-400 tracking-wider">STAGE 1 / 3</span>
-                    <div class="flex items-center gap-3 font-mono-tech">
-                        <span class="text-slate-300">SCORE: <strong id="hud-current-score" class="text-amber-400 text-sm">0</strong></span>
-                        <span class="text-slate-600">|</span>
-                        <span class="text-slate-400">HIGH: <strong id="hud-high-score" class="text-rose-300 text-sm">0</strong></span>
-                    </div>
+                <div id="stage-label" class="text-xs font-mono-tech font-bold tracking-widest text-sky-400 mb-2">
+                    STAGE 1 / 3
                 </div>
-
-                <!-- お題の色見本と色名のみ -->
-                <div class="flex flex-col items-center gap-2.5 w-full">
-                    <div id="target-swatch" class="w-28 h-20 sm:w-36 sm:h-24 rounded-2xl border-2 border-white/25 shadow-xl transition-colors duration-300" style="background-color: rgb(255, 220, 0);"></div>
-                    <h2 id="target-color-name" class="text-lg sm:text-xl font-extrabold text-white tracking-wide">
-                        ゴールデンイエロー
-                    </h2>
+                <div class="flex items-center justify-center gap-4 w-full max-w-sm">
+                    <div id="target-swatch" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-2 border-white/25 shadow-lg shrink-0 transition-colors duration-300"></div>
+                    <div class="text-left">
+                        <div class="text-[11px] font-semibold text-slate-400 tracking-wider">TARGET COLOR</div>
+                        <div id="target-color-name" class="text-lg sm:text-xl font-extrabold text-white mt-0.5">
+                            ゴールデンイエロー
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <!-- 中段：3つの錐体細胞の作用スペクトルグラフ -->
+            <!-- 中央：作用スペクトルグラフ（グラフタッチ照射なし） -->
             <section class="lab-panel rounded-2xl p-3 sm:p-4 flex flex-col gap-2">
                 <div class="flex items-center justify-between px-1">
-                    <div class="flex items-center gap-3 text-[11px] sm:text-xs font-bold">
-                        <span class="flex items-center gap-1 text-sky-400"><span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span>S錐体(青)</span>
-                        <span class="flex items-center gap-1 text-emerald-400"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>M錐体(緑)</span>
-                        <span class="flex items-center gap-1 text-rose-400"><span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>L錐体(赤)</span>
+                    <span class="text-xs font-bold text-slate-300">錐体細胞 作用スペクトル (380nm - 750nm)</span>
+                    <div class="flex items-center gap-2 text-[11px] font-bold">
+                        <span class="text-sky-400">● S</span>
+                        <span class="text-emerald-400">● M</span>
+                        <span class="text-rose-400">● L</span>
                     </div>
-                    <span class="font-mono-tech text-[11px] text-slate-400">380nm - 750nm</span>
                 </div>
-
-                <!-- グラフキャンバス（タッチ照射なし） -->
                 <div id="canvas-wrapper" class="w-full h-56 sm:h-72 relative rounded-xl overflow-hidden bg-slate-950/95 border border-slate-800/90">
                     <canvas id="spectrum-canvas" class="block w-full h-full"></canvas>
                 </div>
             </section>
 
-            <!-- 下段：照射ボタン＆タイトルに戻るボタン -->
+            <!-- 下部：光を照射するボタン ＆ 最下部にタイトルに戻るボタン -->
             <section class="flex flex-col items-center gap-3">
-                <button id="btn-irradiate" class="w-full max-w-md irradiate-btn rounded-2xl text-white font-extrabold py-4 px-6 flex flex-col items-center justify-center">
-                    <div class="flex items-center gap-2 text-lg sm:text-xl tracking-wider">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                        <span>光を照射する</span>
-                    </div>
-                    <span class="text-[11px] font-normal text-sky-100/80 mt-0.5">
-                        タップ または [SPACE] キー
-                    </span>
+                <button id="btn-irradiate" class="irradiate-btn w-full max-w-md py-4 px-6 rounded-2xl text-white font-extrabold text-base sm:text-lg tracking-wider flex items-center justify-center gap-2.5">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    <span>光を照射する</span>
                 </button>
 
-                <button id="btn-back-title-play" class="text-xs text-slate-400 hover:text-slate-200 py-2 px-4 rounded-xl hover:bg-slate-800/60 transition">
-                    ← タイトルに戻る
+                <button id="btn-back-title-play" class="mt-1 py-2 px-4 rounded-xl text-xs text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition">
+                    タイトルに戻る
                 </button>
             </section>
         </main>
     </div>
 
     <!-- ==========================================
-         ステージ判定結果モーダル（LMS興奮度比較付き）
+         詳しい解説モーダル（視覚科学コラムのみ）
+         ========================================== -->
+    <div id="column-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="lab-panel max-w-lg w-full rounded-3xl p-5 sm:p-6 border border-slate-700 shadow-2xl max-h-[88vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                <h2 class="text-base sm:text-lg font-extrabold text-white flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span>
+                    <span>錐体細胞と色覚のしくみ</span>
+                </h2>
+                <button id="btn-close-column-x" class="text-slate-400 hover:text-white p-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800">
+                    <h3 class="font-bold text-sky-400 mb-1.5">1. 網膜にある3種類の「錐体細胞」</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        人間の目の網膜には、光の波長に対する感度（作用スペクトル）が異なる3種類の視細胞<strong>「錐体細胞（Cone cells）」</strong>が存在し、それぞれ光の三原色（RGB）に対応するセンサーの役割を担っています。
+                    </p>
+                    <div class="grid grid-cols-3 gap-2 mt-2.5 text-center text-[11px]">
+                        <div class="bg-sky-950/40 border border-sky-500/30 rounded-xl p-2">
+                            <div class="font-bold text-sky-400">S錐体 (青)</div>
+                            <div class="text-slate-400 text-[10px]">短波長に反応<br>ピーク ~435nm</div>
+                        </div>
+                        <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-2">
+                            <div class="font-bold text-emerald-400">M錐体 (緑)</div>
+                            <div class="text-slate-400 text-[10px]">中波長に反応<br>ピーク ~532nm</div>
+                        </div>
+                        <div class="bg-rose-950/40 border border-rose-500/30 rounded-xl p-2">
+                            <div class="font-bold text-rose-400">L錐体 (赤)</div>
+                            <div class="text-slate-400 text-[10px]">長波長に反応<br>ピーク ~582nm</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800">
+                    <h3 class="font-bold text-amber-300 mb-1.5">2. なぜ単一の光で「黄色」や「シアン」が見えるのか？</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        人間の目には「黄色専用」や「シアン専用」の細胞はありません。しかし、グラフを見ると<strong>M錐体（緑）とL錐体（赤）の感度曲線は大きく重なり合っています</strong>。
+                    </p>
+                    <p class="text-xs text-slate-300 leading-relaxed mt-2">
+                        そのため、約575nm付近の単色光を当てると<strong>M錐体とL錐体が同時に強く興奮</strong>し、脳はそれを「黄色」として知覚します。同様に、約490nm付近の光を当てると<strong>S錐体（青）とM錐体（緑）が同時に反応</strong>するため、鮮やかな「シアン（青緑）」として認識されるのです。
+                    </p>
+                </div>
+            </div>
+
+            <button id="btn-close-column" class="w-full mt-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs sm:text-sm transition">
+                閉じる
+            </button>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         ステージ結果モーダル（練習モード・スコアアタック共通）
          ========================================== -->
     <div id="result-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-4">
         <div class="lab-panel max-w-md w-full rounded-3xl p-5 sm:p-6 border border-slate-700/80 shadow-2xl max-h-[92vh] overflow-y-auto">
@@ -328,96 +410,97 @@
                 <span id="result-mode-badge" class="inline-block px-3 py-0.5 rounded-full bg-slate-800 text-sky-400 text-[11px] font-bold tracking-widest mb-1.5">
                     RESULT
                 </span>
-                <h3 id="result-color-title" class="text-base sm:text-lg font-extrabold text-white">ゴールデンイエロー</h3>
+                <h3 id="result-target-title" class="text-base sm:text-lg font-extrabold text-white">お題: ゴールデンイエロー</h3>
 
                 <!-- ランク＆スコア -->
-                <div class="my-3.5 py-3 bg-slate-900/90 rounded-2xl border border-slate-800 flex items-center justify-around">
+                <div class="my-3 py-2.5 bg-slate-900/90 rounded-2xl border border-slate-800 flex items-center justify-around">
                     <div>
-                        <div class="text-[10px] text-slate-400 font-bold">RANK</div>
-                        <div id="result-rank" class="text-5xl font-black rank-s leading-tight">S</div>
+                        <div class="text-[10px] text-slate-400 font-semibold">RANK</div>
+                        <div id="result-rank" class="text-4xl sm:text-5xl font-black rank-s leading-tight">S</div>
                     </div>
-                    <div class="h-12 w-[1px] bg-slate-800"></div>
+                    <div class="h-10 w-[1px] bg-slate-800"></div>
                     <div>
-                        <div class="text-[10px] text-slate-400 font-bold">SCORE</div>
-                        <div class="text-3xl sm:text-4xl font-mono-tech font-extrabold text-white">
-                            <span id="result-score">98</span><span class="text-base text-slate-400 ml-0.5">/100</span>
+                        <div class="text-[10px] text-slate-400 font-semibold">SCORE</div>
+                        <div class="text-2xl sm:text-3xl font-mono-tech font-extrabold text-white">
+                            <span id="result-score">98</span><span class="text-sm text-slate-400 ml-0.5">pts</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- 色比較プレビュー -->
-                <div class="grid grid-cols-2 gap-3 mb-3.5">
-                    <div class="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800">
-                        <div class="text-[10px] text-slate-400 mb-1">お題の色 (<span id="result-target-wl" class="font-mono-tech text-slate-300">575nm</span>)</div>
-                        <div id="result-target-box" class="h-11 rounded-lg border border-white/20"></div>
+                <!-- お題の色 vs 再現色 -->
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <div class="bg-slate-900/80 p-2 rounded-xl border border-slate-800">
+                        <div class="text-[10px] text-slate-400 mb-1">お題の色 (<span id="res-target-wl" class="font-mono-tech text-sky-300">575nm</span>)</div>
+                        <div id="res-target-swatch" class="h-11 rounded-lg border border-white/20"></div>
                     </div>
-                    <div class="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800">
-                        <div class="text-[10px] text-slate-400 mb-1">あなたの照射 (<span id="result-player-wl" class="font-mono-tech text-sky-300">578nm</span>)</div>
-                        <div id="result-player-box" class="h-11 rounded-lg border border-white/20"></div>
+                    <div class="bg-slate-900/80 p-2 rounded-xl border border-slate-800">
+                        <div class="text-[10px] text-slate-400 mb-1">あなたの照射 (<span id="res-player-wl" class="font-mono-tech text-amber-300">578nm</span>)</div>
+                        <div id="res-player-swatch" class="h-11 rounded-lg border border-white/20"></div>
+                    </div>
+                </div>
+
+                <!-- 錐体細胞興奮度（LMS比較メーター） -->
+                <div class="bg-slate-900/85 rounded-2xl p-3 border border-slate-800 text-left mb-4 space-y-2">
+                    <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+                        <span class="font-bold text-slate-300">錐体細胞 興奮度</span>
+                        <span>白線 = お題の目標値</span>
+                    </div>
+                    <!-- S -->
+                    <div>
+                        <div class="flex justify-between text-[11px] mb-0.5">
+                            <span class="text-sky-400 font-bold">S錐体 (青)</span>
+                            <span class="font-mono-tech text-slate-300"><span id="res-val-s">0</span>% <span class="text-slate-500">/ <span id="res-target-s">0</span>%</span></span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-950 rounded-full relative overflow-hidden">
+                            <div id="res-bar-s" class="h-full bg-sky-400 rounded-full" style="width: 0%"></div>
+                            <div id="res-marker-s" class="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_4px_#fff]" style="left: 0%"></div>
+                        </div>
+                    </div>
+                    <!-- M -->
+                    <div>
+                        <div class="flex justify-between text-[11px] mb-0.5">
+                            <span class="text-emerald-400 font-bold">M錐体 (緑)</span>
+                            <span class="font-mono-tech text-slate-300"><span id="res-val-m">0</span>% <span class="text-slate-500">/ <span id="res-target-m">0</span>%</span></span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-950 rounded-full relative overflow-hidden">
+                            <div id="res-bar-m" class="h-full bg-emerald-400 rounded-full" style="width: 0%"></div>
+                            <div id="res-marker-m" class="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_4px_#fff]" style="left: 0%"></div>
+                        </div>
+                    </div>
+                    <!-- L -->
+                    <div>
+                        <div class="flex justify-between text-[11px] mb-0.5">
+                            <span class="text-rose-400 font-bold">L錐体 (赤)</span>
+                            <span class="font-mono-tech text-slate-300"><span id="res-val-l">0</span>% <span class="text-slate-500">/ <span id="res-target-l">0</span>%</span></span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-950 rounded-full relative overflow-hidden">
+                            <div id="res-bar-l" class="h-full bg-rose-400 rounded-full" style="width: 0%"></div>
+                            <div id="res-marker-l" class="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_4px_#fff]" style="left: 0%"></div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 錐体細胞 興奮度比較ゲージ（結果画面のみ表示） -->
-                <div class="bg-slate-900/85 rounded-2xl p-3 border border-slate-800 text-left mb-4">
-                    <div class="flex items-center justify-between text-[11px] mb-2">
-                        <span class="font-bold text-slate-300">錐体細胞 興奮度 (LMS応答)</span>
-                        <span class="text-[10px] text-slate-400">白線 = お題の興奮度</span>
-                    </div>
-
-                    <div class="space-y-2">
-                        <!-- S錐体 -->
-                        <div>
-                            <div class="flex justify-between text-[11px] mb-0.5">
-                                <span class="font-bold text-sky-400">S錐体 (青)</span>
-                                <span class="font-mono-tech text-slate-300"><span id="res-val-s">0</span>% <span class="text-slate-500">/ 目標 <span id="res-tar-s">0</span>%</span></span>
-                            </div>
-                            <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden relative border border-slate-800">
-                                <div id="res-bar-s" class="h-full bg-sky-400 rounded-full" style="width: 0%"></div>
-                                <div id="res-mark-s" class="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_5px_#fff]" style="left: 0%"></div>
-                            </div>
-                        </div>
-
-                        <!-- M錐体 -->
-                        <div>
-                            <div class="flex justify-between text-[11px] mb-0.5">
-                                <span class="font-bold text-emerald-400">M錐体 (緑)</span>
-                                <span class="font-mono-tech text-slate-300"><span id="res-val-m">0</span>% <span class="text-slate-500">/ 目標 <span id="res-tar-m">0</span>%</span></span>
-                            </div>
-                            <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden relative border border-slate-800">
-                                <div id="res-bar-m" class="h-full bg-emerald-400 rounded-full" style="width: 0%"></div>
-                                <div id="res-mark-m" class="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_5px_#fff]" style="left: 0%"></div>
-                            </div>
-                        </div>
-
-                        <!-- L錐体 -->
-                        <div>
-                            <div class="flex justify-between text-[11px] mb-0.5">
-                                <span class="font-bold text-rose-400">L錐体 (赤)</span>
-                                <span class="font-mono-tech text-slate-300"><span id="res-val-l">0</span>% <span class="text-slate-500">/ 目標 <span id="res-tar-l">0</span>%</span></span>
-                            </div>
-                            <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden relative border border-slate-800">
-                                <div id="res-bar-l" class="h-full bg-rose-400 rounded-full" style="width: 0%"></div>
-                                <div id="res-mark-l" class="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_5px_#fff]" style="left: 0%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- 練習モード専用シェアボタン -->
+                <button id="btn-share-practice" class="w-full mb-2.5 py-2.5 px-4 rounded-xl bg-sky-500/20 hover:bg-sky-500/30 border border-sky-400/50 text-sky-200 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition">
+                    <svg class="w-4 h-4 text-sky-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                    </svg>
+                    <span>結果をシェアする</span>
+                </button>
 
                 <!-- アクションボタン群 -->
-                <div class="flex flex-col gap-2">
-                    <div class="flex gap-2.5">
-                        <!-- 練習モードのみ表示されるやり直しボタン -->
-                        <button id="btn-retry-stage" class="flex-1 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs sm:text-sm transition">
-                            このステージをやり直す
-                        </button>
-                        <button id="btn-next-stage" class="flex-1 py-3 rounded-xl irradiate-btn text-white font-bold text-xs sm:text-sm">
-                            次のステージへ進む
-                        </button>
-                    </div>
-                    <button id="btn-back-title-modal" class="w-full py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-400 hover:text-slate-200 text-xs font-semibold border border-slate-800 transition">
-                        タイトルに戻る
+                <div class="flex gap-2.5">
+                    <button id="btn-retry-stage" class="flex-1 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs sm:text-sm transition">
+                        もう一度挑戦する
+                    </button>
+                    <button id="btn-next-stage" class="flex-1 py-3 rounded-xl irradiate-btn text-white font-bold text-xs sm:text-sm">
+                        次の色へ進む
                     </button>
                 </div>
+
+                <button id="btn-back-title-result" class="mt-3 py-1.5 px-4 rounded-xl text-xs text-slate-400 hover:text-slate-200 transition">
+                    タイトルに戻る
+                </button>
             </div>
         </div>
     </div>
@@ -425,52 +508,60 @@
     <!-- ==========================================
          スコアアタック最終結果モーダル
          ========================================== -->
-    <div id="final-modal" class="fixed inset-0 z-50 bg-slate-950/88 backdrop-blur-md hidden items-center justify-center p-4">
-        <div class="lab-panel max-w-md w-full rounded-3xl p-6 border border-amber-500/30 shadow-2xl text-center">
-            <span class="inline-block px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold tracking-widest mb-2">
+    <div id="final-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="lab-panel max-w-md w-full rounded-3xl p-5 sm:p-6 border border-amber-500/35 shadow-2xl text-center max-h-[92vh] overflow-y-auto">
+            <span class="inline-block px-3 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 text-[11px] font-bold tracking-widest mb-1.5">
                 SCORE ATTACK COMPLETE
             </span>
-            <h2 class="text-xl font-extrabold text-white mb-3">全3ステージ完了！</h2>
+            <h2 class="text-lg sm:text-xl font-extrabold text-white">最終結果レポート</h2>
 
-            <div class="bg-slate-900/95 rounded-2xl p-4 border border-slate-800 mb-4 relative">
-                <div id="new-high-score-badge" class="hidden inline-block px-3 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-rose-500 text-white text-[11px] font-black tracking-wider mb-1 animate-bounce">
-                    NEW HIGH SCORE!
+            <div class="my-3 py-3 px-4 bg-slate-900/90 rounded-2xl border border-slate-800">
+                <div class="text-[11px] text-slate-400 font-semibold">TOTAL SCORE (300点満点)</div>
+                <div class="text-4xl font-mono-tech font-extrabold text-amber-400 my-0.5">
+                    <span id="final-total-score">285</span><span class="text-base text-slate-400 ml-1">pts</span>
                 </div>
-                <div class="text-xs text-slate-400">TOTAL SCORE</div>
-                <div class="text-4xl sm:text-5xl font-mono-tech font-black text-amber-400 my-1">
-                    <span id="final-total-score">285</span><span class="text-lg text-slate-500 font-bold ml-1">/ 300</span>
+                <div id="final-new-record" class="hidden text-xs font-extrabold text-pink-400 animate-pulse mt-1">
+                    ★ NEW HIGH SCORE! ★
                 </div>
-                <div class="text-xs font-mono-tech text-slate-400 mt-1">
-                    HIGH SCORE: <span id="final-high-score" class="text-rose-300 font-bold">285</span> pts
+                <div class="text-[11px] font-mono-tech text-slate-400 mt-1">
+                    HIGH SCORE: <span id="final-high-score" class="text-sky-400 font-bold">285</span> pts
                 </div>
             </div>
 
-            <!-- 3ステージの内訳 -->
-            <div id="final-history-list" class="flex flex-col gap-1.5 text-left mb-5"></div>
-
-            <div class="flex flex-col gap-2.5">
-                <button id="btn-retry-score-attack" class="w-full py-3.5 rounded-xl score-attack-btn text-white font-extrabold text-sm">
-                    もう一度スコアアタックに挑戦
-                </button>
-                <button id="btn-back-title-final" class="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold border border-slate-800 transition">
-                    タイトルに戻る
-                </button>
+            <!-- 3ステージ分の内訳リスト -->
+            <div id="final-stage-list" class="flex flex-col gap-2 mb-4 text-left">
+                <!-- JSで3ステージ分の色比較・波長・スコアを生成 -->
             </div>
+
+            <!-- スコアアタック最終結果シェアボタン -->
+            <button id="btn-share-final" class="w-full mb-2.5 py-3 px-4 rounded-xl bg-gradient-to-r from-sky-500/25 to-indigo-500/25 hover:from-sky-500/35 hover:to-indigo-500/35 border border-sky-400/50 text-sky-200 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition">
+                <svg class="w-4 h-4 text-sky-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                </svg>
+                <span>結果をシェアする</span>
+            </button>
+
+            <button id="btn-retry-scoreattack" class="w-full py-3 rounded-xl btn-scoreattack-mode text-white font-bold text-xs sm:text-sm">
+                もう一度挑戦する
+            </button>
+
+            <button id="btn-back-title-final" class="mt-3 py-1.5 px-4 rounded-xl text-xs text-slate-400 hover:text-slate-200 transition">
+                タイトルに戻る
+            </button>
         </div>
     </div>
 
     <script>
         /**
          * CONE SPECTRUM ―色再現ラボ―
+         * 単一波長照射・作用スペクトル再現ゲーム
          */
 
-        const HIGH_SCORE_STORAGE_KEY = 'cone_spectrum_highscore_v1';
-        const MIN_WL = 380;
-        const MAX_WL = 750;
-        const RESULT_DELAY_MS = 1200; // 照射後の結果表示タイミング: 1.2秒
+        const GAME_SHARE_URL = "https://da-hu-da.github.io/cone-spectrum/";
+        const HIGHSCORE_STORAGE_KEY = "cone_spectrum_highscore_v1";
 
         // ==========================================
-        // 1. サウンドエンジン (Web Audio API)
+        // 1. 音響エンジン (Web Audio API)
         // ==========================================
         class SoundEngine {
             constructor() {
@@ -493,66 +584,65 @@
                 return this.muted;
             }
 
-            // 光照射時の「ピカッ」という閃光イメージのSE
+            // 光照射時の「ピカッ」という閃光SE
             playFlashBeam(wavelength) {
                 if (this.muted) return;
                 this.init();
                 const now = this.ctx.currentTime;
 
-                // 波長に応じたわずかなピッチ差（380nm〜750nm）
-                const norm = (MAX_WL - wavelength) / (MAX_WL - MIN_WL);
-                const pitchOffset = norm * 450;
+                // 波長に応じた基本周波数（短波長ほど高く鋭い）
+                const norm = (750 - wavelength) / (750 - 380);
+                const pitchBoost = 0.85 + norm * 0.45;
 
-                // 1. 鋭い高周波チャープ（「ピッ」の立ち上がり）
+                // 1. 鋭い高周波チャープ（ピカッのアタック）
                 const osc1 = this.ctx.createOscillator();
                 const gain1 = this.ctx.createGain();
                 osc1.type = 'sine';
-                osc1.frequency.setValueAtTime(1400 + pitchOffset, now);
-                osc1.frequency.exponentialRampToValueAtTime(3400 + pitchOffset, now + 0.045);
-                osc1.frequency.exponentialRampToValueAtTime(980, now + 0.16);
+                osc1.frequency.setValueAtTime(1400 * pitchBoost, now);
+                osc1.frequency.exponentialRampToValueAtTime(3200 * pitchBoost, now + 0.045);
+                osc1.frequency.exponentialRampToValueAtTime(980 * pitchBoost, now + 0.16);
 
-                gain1.gain.setValueAtTime(0.001, now);
-                gain1.gain.linearRampToValueAtTime(0.28, now + 0.008);
-                gain1.gain.exponentialRampToValueAtTime(0.0008, now + 0.17);
+                gain1.gain.setValueAtTime(0.01, now);
+                gain1.gain.linearRampToValueAtTime(0.28, now + 0.012);
+                gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.17);
 
                 osc1.connect(gain1);
                 gain1.connect(this.ctx.destination);
                 osc1.start(now);
                 osc1.stop(now + 0.18);
 
-                // 2. 閃光の輝きを表す高音倍音スパークル
+                // 2. 金属的スパークル倍音
                 const osc2 = this.ctx.createOscillator();
                 const gain2 = this.ctx.createGain();
                 osc2.type = 'triangle';
-                osc2.frequency.setValueAtTime(2800 + pitchOffset, now + 0.01);
-                osc2.frequency.exponentialRampToValueAtTime(4600 + pitchOffset, now + 0.12);
+                osc2.frequency.setValueAtTime(2450 * pitchBoost, now);
+                osc2.frequency.exponentialRampToValueAtTime(4100 * pitchBoost, now + 0.07);
 
-                gain2.gain.setValueAtTime(0.14, now + 0.01);
-                gain2.gain.exponentialRampToValueAtTime(0.0008, now + 0.14);
+                gain2.gain.setValueAtTime(0.16, now);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
 
                 osc2.connect(gain2);
                 gain2.connect(this.ctx.destination);
-                osc2.start(now + 0.01);
-                osc2.stop(now + 0.15);
+                osc2.start(now);
+                osc2.stop(now + 0.12);
 
-                // 3. 「カッ」という歯切れを作る極短ホワイトノイズバースト
-                const bufferSize = Math.floor(this.ctx.sampleRate * 0.06);
+                // 3. 短時間の高域ホワイトノイズバースト（閃光の空気感）
+                const bufferSize = Math.floor(this.ctx.sampleRate * 0.08);
                 const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
                 const output = noiseBuffer.getChannelData(0);
                 for (let i = 0; i < bufferSize; i++) {
-                    output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.28));
+                    output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.3));
                 }
-
                 const whiteNoise = this.ctx.createBufferSource();
                 whiteNoise.buffer = noiseBuffer;
 
                 const filter = this.ctx.createBiquadFilter();
                 filter.type = 'highpass';
-                filter.frequency.setValueAtTime(2400, now);
+                filter.frequency.value = 2800;
 
                 const noiseGain = this.ctx.createGain();
                 noiseGain.gain.setValueAtTime(0.18, now);
-                noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+                noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
 
                 whiteNoise.connect(filter);
                 filter.connect(noiseGain);
@@ -560,22 +650,21 @@
                 whiteNoise.start(now);
             }
 
-            // 結果のランクによって豪華さが変化するファンファーレSE
+            // ランク別ファンファーレ（Cはシンプル、Sは豪華に）
             playResultRank(rank) {
                 if (this.muted) return;
                 this.init();
                 const now = this.ctx.currentTime;
 
                 if (rank === 'C') {
-                    // Cランク: シンプルな2音（今まで通り）
-                    const notes = [293.66, 261.63];
-                    notes.forEach((freq, idx) => {
+                    // Cランク：落ち着いた2音チャイム
+                    [330, 293.66].forEach((freq, i) => {
                         const osc = this.ctx.createOscillator();
                         const gain = this.ctx.createGain();
                         osc.type = 'triangle';
-                        const t = now + idx * 0.09;
+                        const t = now + i * 0.12;
                         osc.frequency.setValueAtTime(freq, t);
-                        gain.gain.setValueAtTime(0.16, t);
+                        gain.gain.setValueAtTime(0.15, t);
                         gain.gain.exponentialRampToValueAtTime(0.001, t + 0.32);
                         osc.connect(gain);
                         gain.connect(this.ctx.destination);
@@ -583,13 +672,12 @@
                         osc.stop(t + 0.34);
                     });
                 } else if (rank === 'B') {
-                    // Bランク: 明るい3音メジャーアルペジオ
-                    const notes = [392.00, 493.88, 587.33];
-                    notes.forEach((freq, idx) => {
+                    // Bランク：明るい3音メジャーアルペジオ
+                    [392.00, 493.88, 587.33].forEach((freq, i) => {
                         const osc = this.ctx.createOscillator();
                         const gain = this.ctx.createGain();
                         osc.type = 'triangle';
-                        const t = now + idx * 0.075;
+                        const t = now + i * 0.09;
                         osc.frequency.setValueAtTime(freq, t);
                         gain.gain.setValueAtTime(0.18, t);
                         gain.gain.exponentialRampToValueAtTime(0.001, t + 0.38);
@@ -599,55 +687,54 @@
                         osc.stop(t + 0.4);
                     });
                 } else if (rank === 'A') {
-                    // Aランク: 4音ファンファーレ＋オクターブ倍音
-                    const notes = [440.00, 554.37, 659.25, 880.00];
-                    notes.forEach((freq, idx) => {
-                        const t = now + idx * 0.07;
-                        [1, 2].forEach((mult, layer) => {
+                    // Aランク：4音ファンファーレ＋オクターブ倍音
+                    const notes = [440, 554.37, 659.25, 880];
+                    notes.forEach((freq, i) => {
+                        const t = now + i * 0.085;
+                        [1, 2].forEach((mult, mIdx) => {
                             const osc = this.ctx.createOscillator();
                             const gain = this.ctx.createGain();
-                            osc.type = layer === 0 ? 'triangle' : 'sine';
+                            osc.type = mIdx === 0 ? 'triangle' : 'sine';
                             osc.frequency.setValueAtTime(freq * mult, t);
-                            gain.gain.setValueAtTime(layer === 0 ? 0.18 : 0.07, t);
-                            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.48);
+                            gain.gain.setValueAtTime(mIdx === 0 ? 0.18 : 0.07, t);
+                            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
                             osc.connect(gain);
                             gain.connect(this.ctx.destination);
                             osc.start(t);
-                            osc.stop(t + 0.5);
+                            osc.stop(t + 0.46);
                         });
                     });
-                } else if (rank === 'S') {
-                    // Sランク: 豪華な高速上昇アルペジオ＋メジャー9th和音＋高音シマーベル
-                    const arp = [523.25, 659.25, 783.99, 987.77, 1046.50, 1318.51];
-                    arp.forEach((freq, idx) => {
-                        const t = now + idx * 0.052;
+                } else {
+                    // Sランク：高速上昇アルペジオ＋メジャー9th和音＋高音シマーベル
+                    const arp = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+                    arp.forEach((freq, i) => {
+                        const t = now + i * 0.065;
                         const osc = this.ctx.createOscillator();
                         const gain = this.ctx.createGain();
                         osc.type = 'triangle';
                         osc.frequency.setValueAtTime(freq, t);
-                        gain.gain.setValueAtTime(0.18, t);
-                        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+                        gain.gain.setValueAtTime(0.20, t);
+                        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.55);
                         osc.connect(gain);
                         gain.connect(this.ctx.destination);
                         osc.start(t);
-                        osc.stop(t + 0.46);
+                        osc.stop(t + 0.56);
                     });
 
-                    // フィナーレの厚みあるCadd9和音＋高音シマー
-                    const chordStart = now + arp.length * 0.052;
-                    const chordNotes = [523.25, 659.25, 783.99, 1046.50, 1174.66, 2093.00];
-                    chordNotes.forEach((freq, idx) => {
+                    // 祝福のメジャー9thコード＆シマー
+                    const chordStart = now + 0.32;
+                    const chord = [523.25, 659.25, 783.99, 987.77, 1174.66, 2093.00];
+                    chord.forEach((freq, idx) => {
                         const osc = this.ctx.createOscillator();
                         const gain = this.ctx.createGain();
                         osc.type = idx >= 4 ? 'sine' : 'triangle';
                         osc.frequency.setValueAtTime(freq, chordStart);
-                        const vol = idx >= 4 ? 0.09 : 0.13;
-                        gain.gain.setValueAtTime(vol, chordStart);
-                        gain.gain.exponentialRampToValueAtTime(0.0008, chordStart + 0.95);
+                        gain.gain.setValueAtTime(idx >= 4 ? 0.08 : 0.12, chordStart);
+                        gain.gain.exponentialRampToValueAtTime(0.0008, chordStart + 0.85);
                         osc.connect(gain);
                         gain.connect(this.ctx.destination);
                         osc.start(chordStart);
-                        osc.stop(chordStart + 0.98);
+                        osc.stop(chordStart + 0.86);
                     });
                 }
             }
@@ -656,6 +743,9 @@
         // ==========================================
         // 2. 視覚生理学＆光学モデル
         // ==========================================
+        const MIN_WL = 380;
+        const MAX_WL = 750;
+
         function gaussian(x, peak, sigmaLeft, sigmaRight) {
             const sigma = x < peak ? sigmaLeft : sigmaRight;
             return Math.exp(-0.5 * Math.pow((x - peak) / sigma, 2));
@@ -728,23 +818,22 @@
             };
         }
 
-        // 単一波長で100%再現可能なお題プール
-        const SINGLE_WAVELENGTH_TARGETS = [
-            { name: "ディープバイオレット", wl: 405 },
-            { name: "コバルトブルー", wl: 435 },
-            { name: "セルリアンブルー", wl: 465 },
-            { name: "シアン（青緑）", wl: 488 },
-            { name: "エメラルドグリーン", wl: 515 },
-            { name: "リーフグリーン", wl: 535 },
-            { name: "ライムグリーン", wl: 555 },
-            { name: "ゴールデンイエロー", wl: 575 },
-            { name: "アンバーオレンジ", wl: 595 },
-            { name: "バーミリオン（朱赤）", wl: 615 },
-            { name: "スカーレットレッド", wl: 640 }
+        // 単一波長で100%再現可能なお題リスト
+        const SINGLE_WAVELENGTH_PRESETS = [
+            { label: "バイオレットブルー", wl: 418 },
+            { label: "コバルトブルー", wl: 438 },
+            { label: "セルリアンブルー", wl: 465 },
+            { label: "シアン（青緑）", wl: 492 },
+            { label: "エメラルドグリーン", wl: 525 },
+            { label: "リーフグリーン", wl: 548 },
+            { label: "ゴールデンイエロー", wl: 575 },
+            { label: "サンセットオレンジ", wl: 602 },
+            { label: "スカーレットレッド", wl: 632 },
+            { label: "ディープレッド", wl: 665 }
         ];
 
         // ==========================================
-        // 3. ゲームコントローラー
+        // 3. ゲーム本体コントローラー
         // ==========================================
         class ConeSpectrumGame {
             constructor() {
@@ -752,106 +841,109 @@
                 this.canvas = document.getElementById('spectrum-canvas');
                 this.ctx = this.canvas.getContext('2d');
 
-                // ハイスコアの読み込み
-                this.highScore = this.loadHighScore();
-
-                // モード＆進行状態
-                this.mode = 'practice'; // 'practice' | 'score_attack'
+                // ゲームモード ('practice' | 'scoreattack')
+                this.mode = 'practice';
                 this.stageNumber = 1;
-                this.totalScoreAttackStages = 3;
+                this.totalStages = 3;
                 this.scoreAttackTotal = 0;
                 this.scoreAttackRecords = [];
-                this.usedTargetIndices = [];
+                this.highScore = this.loadHighScore();
 
-                // スキャナー状態
-                this.currentWavelength = 400;
-                this.scanDirection = 1;
-                this.scanSpeed = 195; // nm/sec
-                this.isScanning = false;
-                this.lockedShot = null; // { wl, color, resp, pulseTime }
+                // 状態フラグ
+                this.isPlaying = false;
+                this.isLocked = false; // 照射後の1.2秒ロック状態
+                this.lockedWavelength = null;
+                this.lockTimestamp = 0;
                 this.resultTimer = null;
+
+                // スキャナー移動
+                this.currentWavelength = 410;
+                this.scanDirection = 1;
+                this.scanSpeed = 195;
                 this.lastFrameTime = performance.now();
 
-                this.targetData = null;
+                // 現在のお題と最新リザルトデータ（シェア用）
+                this.currentTarget = null;
+                this.lastResultData = null;
 
+                this.updateHighScoreUI();
                 this.bindEvents();
-                this.updateHighScoreDisplays();
                 this.resizeCanvas();
             }
 
-            // localStorageからハイスコアを取得
+            // ハイスコアの読み込み・保存
             loadHighScore() {
                 try {
-                    const saved = localStorage.getItem(HIGH_SCORE_STORAGE_KEY);
-                    const parsed = parseInt(saved, 10);
-                    return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+                    const saved = localStorage.getItem(HIGHSCORE_STORAGE_KEY);
+                    return saved ? Math.max(0, parseInt(saved, 10) || 0) : 0;
                 } catch (e) {
                     return 0;
                 }
             }
 
-            // localStorageへハイスコアを保存
             saveHighScore(score) {
-                try {
-                    localStorage.setItem(HIGH_SCORE_STORAGE_KEY, String(score));
-                } catch (e) {
-                    // ストレージ制限時は無視
+                if (score > this.highScore) {
+                    this.highScore = score;
+                    try {
+                        localStorage.setItem(HIGHSCORE_STORAGE_KEY, String(this.highScore));
+                    } catch (e) {
+                        // ストレージ制限時はメモリ上のみ保持
+                    }
+                    this.updateHighScoreUI();
+                    return true;
                 }
+                return false;
             }
 
-            // タイトルボタン内・プレイ画面HUD・最終結果のハイスコア表示を同期更新
-            updateHighScoreDisplays() {
-                const titleHsEl = document.getElementById('title-high-score');
-                if (titleHsEl) titleHsEl.textContent = this.highScore;
-
-                const hudHsEl = document.getElementById('hud-high-score');
-                if (hudHsEl) hudHsEl.textContent = this.highScore;
-
-                const finalHsEl = document.getElementById('final-high-score');
-                if (finalHsEl) finalHsEl.textContent = this.highScore;
+            updateHighScoreUI() {
+                const titleHighEl = document.getElementById('title-highscore');
+                const playHighEl = document.getElementById('play-high-score');
+                const finalHighEl = document.getElementById('final-high-score');
+                if (titleHighEl) titleHighEl.textContent = this.highScore;
+                if (playHighEl) playHighEl.textContent = this.highScore;
+                if (finalHighEl) finalHighEl.textContent = this.highScore;
             }
 
+            // イベント登録
             bindEvents() {
                 window.addEventListener('resize', () => this.resizeCanvas());
-
-                // タイトル画面：解説アコーディオン開閉
-                document.getElementById('btn-toggle-column').addEventListener('click', () => {
-                    const content = document.getElementById('column-content');
-                    const chevron = document.getElementById('column-chevron');
-                    const isHidden = content.classList.contains('hidden');
-                    content.classList.toggle('hidden', !isHidden);
-                    chevron.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
-                });
 
                 // タイトル画面：練習モード開始
                 document.getElementById('btn-mode-practice').addEventListener('click', () => {
                     this.sound.init();
-                    this.startGame('practice');
+                    this.startMode('practice');
                 });
 
                 // タイトル画面：スコアアタック開始
-                document.getElementById('btn-mode-score').addEventListener('click', () => {
+                document.getElementById('btn-mode-scoreattack').addEventListener('click', () => {
                     this.sound.init();
-                    this.startGame('score_attack');
+                    this.startMode('scoreattack');
                 });
 
-                // 照射ボタン（pointerdownでゼロレイテンシ反応）
+                // 詳しい解説モーダル開閉
+                document.getElementById('btn-open-column').addEventListener('click', () => {
+                    document.getElementById('column-modal').classList.remove('hidden');
+                    document.getElementById('column-modal').classList.add('flex');
+                });
+                const closeColumn = () => {
+                    document.getElementById('column-modal').classList.add('hidden');
+                    document.getElementById('column-modal').classList.remove('flex');
+                };
+                document.getElementById('btn-close-column').addEventListener('click', closeColumn);
+                document.getElementById('btn-close-column-x').addEventListener('click', closeColumn);
+
+                // 光を照射するボタン（ゼロレイテンシ pointerdown 対応）
                 const irradiateBtn = document.getElementById('btn-irradiate');
                 irradiateBtn.addEventListener('pointerdown', (e) => {
                     e.preventDefault();
-                    this.irradiate();
+                    this.handleIrradiate();
                 });
 
-                // キーボード操作（Spaceキーのみで照射）
+                // Spaceキーでも照射可能
                 window.addEventListener('keydown', (e) => {
-                    if (e.code === 'Space') {
-                        const gameVisible = !document.getElementById('game-screen').classList.contains('hidden');
-                        const resultHidden = document.getElementById('result-modal').classList.contains('hidden');
-                        const finalHidden = document.getElementById('final-modal').classList.contains('hidden');
-                        if (gameVisible && resultHidden && finalHidden && this.isScanning) {
-                            e.preventDefault();
-                            this.irradiate();
-                        }
+                    if (e.code === 'Space' && this.isPlaying && !this.isLocked) {
+                        e.preventDefault();
+                        this.handleIrradiate();
                     }
                 });
 
@@ -864,40 +956,61 @@
 
                 // 結果モーダル内ボタン
                 document.getElementById('btn-retry-stage').addEventListener('click', () => {
-                    if (this.mode !== 'practice') return;
                     this.hideResultModal();
-                    this.prepareCurrentRound();
+                    this.prepareCurrentTarget();
                 });
 
                 document.getElementById('btn-next-stage').addEventListener('click', () => {
                     this.hideResultModal();
                     if (this.mode === 'practice') {
                         this.stageNumber++;
-                        this.setupNewTarget();
-                        this.prepareCurrentRound();
+                        this.setupNewTarget(true);
                     } else {
-                        if (this.stageNumber < this.totalScoreAttackStages) {
+                        if (this.stageNumber < this.totalStages) {
                             this.stageNumber++;
-                            this.setupNewTarget();
-                            this.prepareCurrentRound();
+                            this.setupNewTarget(true);
                         } else {
-                            this.showScoreAttackFinalModal();
+                            this.showFinalScoreAttackResult();
                         }
                     }
                 });
 
-                // スコアアタック最終モーダルからの再挑戦
-                document.getElementById('btn-retry-score-attack').addEventListener('click', () => {
+                // スコアアタック再挑戦
+                document.getElementById('btn-retry-scoreattack').addEventListener('click', () => {
                     document.getElementById('final-modal').classList.add('hidden');
                     document.getElementById('final-modal').classList.remove('flex');
-                    this.startGame('score_attack');
+                    this.startMode('scoreattack');
                 });
 
                 // タイトルに戻るボタン群
-                const backToTitle = () => this.returnToTitle();
-                document.getElementById('btn-back-title-play').addEventListener('click', backToTitle);
-                document.getElementById('btn-back-title-modal').addEventListener('click', backToTitle);
-                document.getElementById('btn-back-title-final').addEventListener('click', backToTitle);
+                const returnToTitle = () => {
+                    if (this.resultTimer) {
+                        clearTimeout(this.resultTimer);
+                        this.resultTimer = null;
+                    }
+                    this.isPlaying = false;
+                    this.isLocked = false;
+                    this.hideResultModal();
+                    document.getElementById('final-modal').classList.add('hidden');
+                    document.getElementById('final-modal').classList.remove('flex');
+                    document.getElementById('game-screen').classList.add('hidden');
+                    document.getElementById('game-screen').classList.remove('flex');
+                    document.getElementById('title-screen').classList.remove('hidden');
+                    document.getElementById('title-screen').classList.add('flex');
+                    this.updateHighScoreUI();
+                };
+
+                document.getElementById('btn-back-title-play').addEventListener('click', returnToTitle);
+                document.getElementById('btn-back-title-result').addEventListener('click', returnToTitle);
+                document.getElementById('btn-back-title-final').addEventListener('click', returnToTitle);
+
+                // シェアボタン（練習モード結果＆スコアアタック最終結果）
+                document.getElementById('btn-share-practice').addEventListener('click', () => {
+                    this.sharePracticeResult();
+                });
+                document.getElementById('btn-share-final').addEventListener('click', () => {
+                    this.shareScoreAttackResult();
+                });
             }
 
             resizeCanvas() {
@@ -912,147 +1025,102 @@
                 this.canvasHeight = rect.height;
             }
 
-            // ゲーム開始（モード別初期化）
-            startGame(mode) {
-                this.clearPendingResultTimer();
+            // モード開始
+            startMode(mode) {
                 this.mode = mode;
                 this.stageNumber = 1;
                 this.scoreAttackTotal = 0;
                 this.scoreAttackRecords = [];
-                this.usedTargetIndices = [];
-                this.highScore = this.loadHighScore();
-                this.updateHighScoreDisplays();
 
-                // 画面切替
                 document.getElementById('title-screen').classList.add('hidden');
-                const gameScreen = document.getElementById('game-screen');
-                gameScreen.classList.remove('hidden');
-                gameScreen.classList.add('flex');
+                document.getElementById('title-screen').classList.remove('flex');
+                document.getElementById('game-screen').classList.remove('hidden');
+                document.getElementById('game-screen').classList.add('flex');
 
-                // 練習モード時はSTAGE番号・スコアHUDを非表示、スコアアタック時のみ表示
-                const hud = document.getElementById('score-attack-hud');
-                if (this.mode === 'score_attack') {
-                    hud.classList.remove('hidden');
-                    this.updateScoreAttackHud();
+                // 練習モードではSTAGE番号非表示、スコアアタックでは表示
+                const stageLabel = document.getElementById('stage-label');
+                const scoreBox = document.getElementById('header-score-box');
+                if (mode === 'practice') {
+                    stageLabel.classList.add('hidden');
+                    scoreBox.classList.add('hidden');
+                    scoreBox.classList.remove('flex');
                 } else {
-                    hud.classList.add('hidden');
+                    stageLabel.classList.remove('hidden');
+                    scoreBox.classList.remove('hidden');
+                    scoreBox.classList.add('flex');
+                    document.getElementById('play-current-score').textContent = '0';
+                    document.getElementById('play-high-score').textContent = this.highScore;
                 }
 
                 this.resizeCanvas();
-                this.setupNewTarget();
-                this.prepareCurrentRound();
+                this.setupNewTarget(true);
             }
 
-            // タイトル画面へ戻る
-            returnToTitle() {
-                this.clearPendingResultTimer();
-                this.isScanning = false;
-                this.lockedShot = null;
-
-                this.hideResultModal();
-                document.getElementById('final-modal').classList.add('hidden');
-                document.getElementById('final-modal').classList.remove('flex');
-
-                document.getElementById('game-screen').classList.add('hidden');
-                document.getElementById('game-screen').classList.remove('flex');
-                document.getElementById('title-screen').classList.remove('hidden');
-
-                // タイトルに戻るたびに最新ハイスコアを再描画
-                this.highScore = this.loadHighScore();
-                this.updateHighScoreDisplays();
-            }
-
-            clearPendingResultTimer() {
-                if (this.resultTimer) {
-                    clearTimeout(this.resultTimer);
-                    this.resultTimer = null;
+            // 新しいお題生成
+            setupNewTarget(pickNewPreset = true) {
+                if (pickNewPreset || !this.currentTarget) {
+                    // 前回と連続で同じ色にならないよう選出
+                    let candidates = SINGLE_WAVELENGTH_PRESETS;
+                    if (this.currentTarget) {
+                        candidates = SINGLE_WAVELENGTH_PRESETS.filter(p => p.wl !== this.currentTarget.wl);
+                    }
+                    const preset = candidates[Math.floor(Math.random() * candidates.length)];
+                    const lms = getConeResponse(preset.wl);
+                    const rgb = lmsToRgb(lms);
+                    this.currentTarget = {
+                        label: preset.label,
+                        wl: preset.wl,
+                        lms: lms,
+                        rgb: rgb
+                    };
                 }
+                this.prepareCurrentTarget();
             }
 
-            // スコアアタック用HUD更新（現在スコアの横にハイスコアを表示）
-            updateScoreAttackHud() {
-                if (this.mode !== 'score_attack') return;
-                document.getElementById('stage-label').textContent = `STAGE ${this.stageNumber} / ${this.totalScoreAttackStages}`;
-                document.getElementById('hud-current-score').textContent = this.scoreAttackTotal;
-                document.getElementById('hud-high-score').textContent = this.highScore;
-            }
-
-            // 新しい単一波長のお題を生成
-            setupNewTarget() {
-                let candidates = SINGLE_WAVELENGTH_TARGETS.map((_, i) => i)
-                    .filter(i => !this.usedTargetIndices.includes(i));
-                if (candidates.length === 0) {
-                    this.usedTargetIndices = [];
-                    candidates = SINGLE_WAVELENGTH_TARGETS.map((_, i) => i);
-                }
-
-                const chosenIdx = candidates[Math.floor(Math.random() * candidates.length)];
-                this.usedTargetIndices.push(chosenIdx);
-
-                const item = SINGLE_WAVELENGTH_TARGETS[chosenIdx];
-                const lms = getConeResponse(item.wl);
-                const rgb = lmsToRgb(lms);
-
-                this.targetData = {
-                    name: item.name,
-                    wl: item.wl,
-                    lms: lms,
-                    rgb: rgb
-                };
-
-                // プレイ画面上部にお題の色と名前のみを表示
-                document.getElementById('target-swatch').style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
-                document.getElementById('target-color-name').textContent = item.name;
-            }
-
-            // ラウンド開始準備（カーソル移動再開）
-            prepareCurrentRound() {
-                this.clearPendingResultTimer();
-                this.lockedShot = null;
-                this.isScanning = true;
-
-                // ステージ進行に応じたわずかな速度変化（練習モードは一定テンポ）
-                if (this.mode === 'score_attack') {
+            // 現在のターゲットでプレイ開始状態へリセット
+            prepareCurrentTarget() {
+                if (this.mode === 'scoreattack') {
+                    document.getElementById('stage-label').textContent = `STAGE ${this.stageNumber} / ${this.totalStages}`;
+                    // ステージごとに少しスピードアップ
                     this.scanSpeed = 185 + (this.stageNumber - 1) * 35;
-                    this.updateScoreAttackHud();
                 } else {
-                    this.scanSpeed = 190;
+                    this.scanSpeed = 195;
                 }
 
-                // ランダムな初期位置からスキャン開始
+                const rgb = this.currentTarget.rgb;
+                document.getElementById('target-swatch').style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+                document.getElementById('target-color-name').textContent = this.currentTarget.label;
+
+                this.isLocked = false;
+                this.lockedWavelength = null;
+                this.isPlaying = true;
                 this.currentWavelength = MIN_WL + Math.random() * (MAX_WL - MIN_WL);
                 this.scanDirection = Math.random() < 0.5 ? 1 : -1;
+                this.lastFrameTime = performance.now();
 
                 document.getElementById('btn-irradiate').disabled = false;
             }
 
-            // 光の照射（1ステージ1回のみ・即ロック・1.2秒後に結果表示）
-            irradiate() {
-                if (!this.isScanning || this.lockedShot) return;
-
-                this.isScanning = false;
-                document.getElementById('btn-irradiate').disabled = true;
+            // 光照射アクション
+            handleIrradiate() {
+                if (!this.isPlaying || this.isLocked) return;
 
                 const wl = Math.round(this.currentWavelength);
-                const resp = getConeResponse(wl);
+                this.isLocked = true;
+                this.lockedWavelength = wl;
+                this.lockTimestamp = performance.now();
+
+                document.getElementById('btn-irradiate').disabled = true;
+
+                // 「ピカッ」閃光SE＆網膜フラッシュ
                 const beamColor = wavelengthToBeamColor(wl);
-
-                this.lockedShot = {
-                    wl: wl,
-                    resp: resp,
-                    color: beamColor,
-                    lockedAt: performance.now()
-                };
-
-                // 「ピカッ」という閃光SE＆網膜フラッシュ演出
                 this.sound.playFlashBeam(wl);
                 this.triggerRetinaFlash(beamColor);
 
-                // 照射位置を1.2秒（1200ms）見せてから結果モーダルを表示
+                // 1.2秒後に結果を表示
                 this.resultTimer = setTimeout(() => {
-                    this.resultTimer = null;
-                    this.showStageResultModal();
-                }, RESULT_DELAY_MS);
+                    this.evaluateIrradiation(wl);
+                }, 1200);
             }
 
             triggerRetinaFlash(color) {
@@ -1063,113 +1131,101 @@
                 flash.classList.add('flash-overlay');
                 setTimeout(() => {
                     flash.classList.add('hidden');
-                }, 560);
+                }, 520);
             }
 
-            // スコア計算（0〜100点）
-            calculateStageScore(playerLms, targetLms) {
-                const dL = targetLms.l - playerLms.l;
-                const dM = targetLms.m - playerLms.m;
-                const dS = targetLms.s - playerLms.s;
+            // 照射結果の評価・モーダル表示
+            evaluateIrradiation(playerWl) {
+                this.isPlaying = false;
+                const target = this.currentTarget;
+                const playerLms = getConeResponse(playerWl);
+                const playerRgb = lmsToRgb(playerLms);
+
+                // LMS空間での一致度から100点満点で採点
+                const dL = target.lms.l - playerLms.l;
+                const dM = target.lms.m - playerLms.m;
+                const dS = target.lms.s - playerLms.s;
                 const dist = Math.sqrt(dL * dL + dM * dM + dS * dS);
-
-                const raw = Math.max(0, 1 - (dist / 1.15));
-                const score = Math.round(Math.pow(raw, 1.2) * 100);
-                return Math.min(100, Math.max(0, score));
-            }
-
-            // 結果モーダル表示
-            showStageResultModal() {
-                if (!this.lockedShot || !this.targetData) return;
-
-                const playerLms = this.lockedShot.resp;
-                const targetLms = this.targetData.lms;
-                const score = this.calculateStageScore(playerLms, targetLms);
+                const raw = Math.max(0, 1 - dist / 1.15);
+                const score = Math.round(Math.pow(raw, 1.1) * 100);
 
                 let rank = 'C';
                 let rankClass = 'rank-c';
                 if (score >= 95) {
                     rank = 'S';
                     rankClass = 'rank-s';
-                } else if (score >= 82) {
+                } else if (score >= 85) {
                     rank = 'A';
                     rankClass = 'rank-a';
-                } else if (score >= 65) {
+                } else if (score >= 70) {
                     rank = 'B';
                     rankClass = 'rank-b';
                 }
 
-                // スコアアタック時は累積加算＆ハイスコア即時チェック
-                if (this.mode === 'score_attack') {
-                    this.scoreAttackTotal += score;
-                    if (this.scoreAttackTotal > this.highScore) {
-                        this.highScore = this.scoreAttackTotal;
-                        this.saveHighScore(this.highScore);
-                        this.updateHighScoreDisplays();
-                    }
-                    this.updateScoreAttackHud();
+                // 最新リザルト保存（シェア画像生成用）
+                this.lastResultData = {
+                    label: target.label,
+                    targetWl: target.wl,
+                    targetRgb: target.rgb,
+                    playerWl: playerWl,
+                    playerRgb: playerRgb,
+                    score: score,
+                    rank: rank
+                };
 
-                    this.scoreAttackRecords.push({
-                        stage: this.stageNumber,
-                        name: this.targetData.name,
-                        score: score,
-                        rank: rank
-                    });
+                if (this.mode === 'scoreattack') {
+                    this.scoreAttackTotal += score;
+                    this.scoreAttackRecords.push({ ...this.lastResultData, stage: this.stageNumber });
+                    document.getElementById('play-current-score').textContent = this.scoreAttackTotal;
                 }
 
-                // ランク別ファンファーレSE再生
-                this.sound.playResultRank(rank);
-
-                // モーダルUI反映
+                // 結果モーダルUI反映
                 document.getElementById('result-mode-badge').textContent =
-                    this.mode === 'score_attack'
-                        ? `STAGE ${this.stageNumber} / ${this.totalScoreAttackStages}`
-                        : 'PRACTICE RESULT';
-
-                document.getElementById('result-color-title').textContent = this.targetData.name;
+                    this.mode === 'practice' ? 'PRACTICE RESULT' : `STAGE ${this.stageNumber} / ${this.totalStages} RESULT`;
+                document.getElementById('result-target-title').textContent = `お題: ${target.label}`;
 
                 const rankEl = document.getElementById('result-rank');
                 rankEl.textContent = rank;
-                rankEl.className = `text-5xl font-black leading-tight ${rankClass}`;
-
+                rankEl.className = `text-4xl sm:text-5xl font-black leading-tight ${rankClass}`;
                 document.getElementById('result-score').textContent = score;
 
-                // 色比較＆波長表示
-                const tRgb = this.targetData.rgb;
-                const pRgb = lmsToRgb(playerLms);
-                document.getElementById('result-target-wl').textContent = `${this.targetData.wl}nm`;
-                document.getElementById('result-target-box').style.backgroundColor = `rgb(${tRgb.r}, ${tRgb.g}, ${tRgb.b})`;
+                document.getElementById('res-target-wl').textContent = `${target.wl}nm`;
+                document.getElementById('res-target-swatch').style.backgroundColor = `rgb(${target.rgb.r}, ${target.rgb.g}, ${target.rgb.b})`;
 
-                document.getElementById('result-player-wl').textContent = `${this.lockedShot.wl}nm`;
-                document.getElementById('result-player-box').style.backgroundColor = `rgb(${pRgb.r}, ${pRgb.g}, ${pRgb.b})`;
+                document.getElementById('res-player-wl').textContent = `${playerWl}nm`;
+                document.getElementById('res-player-swatch').style.backgroundColor = `rgb(${playerRgb.r}, ${playerRgb.g}, ${playerRgb.b})`;
 
-                // 錐体細胞興奮度ゲージ更新
-                const setConeGauge = (key, pVal, tVal) => {
+                // 錐体細胞興奮度バー更新
+                const setConeBar = (key, pVal, tVal) => {
                     const pPct = Math.round(pVal * 100);
                     const tPct = Math.round(tVal * 100);
                     document.getElementById(`res-val-${key}`).textContent = pPct;
-                    document.getElementById(`res-tar-${key}`).textContent = tPct;
+                    document.getElementById(`res-target-${key}`).textContent = tPct;
                     document.getElementById(`res-bar-${key}`).style.width = `${pPct}%`;
-                    document.getElementById(`res-mark-${key}`).style.left = `${tPct}%`;
+                    document.getElementById(`res-marker-${key}`).style.left = `${tPct}%`;
                 };
-                setConeGauge('s', playerLms.s, targetLms.s);
-                setConeGauge('m', playerLms.m, targetLms.m);
-                setConeGauge('l', playerLms.l, targetLms.l);
+                setConeBar('s', playerLms.s, target.lms.s);
+                setConeBar('m', playerLms.m, target.lms.m);
+                setConeBar('l', playerLms.l, target.lms.l);
 
-                // ボタン表示制御（スコアアタック時はやり直しボタン非表示）
+                // モード別のボタン切り替え（スコアアタックはやり直し不可・シェアは最終結果のみ）
                 const retryBtn = document.getElementById('btn-retry-stage');
                 const nextBtn = document.getElementById('btn-next-stage');
+                const sharePracticeBtn = document.getElementById('btn-share-practice');
 
                 if (this.mode === 'practice') {
                     retryBtn.classList.remove('hidden');
-                    nextBtn.textContent = '次のお題へ進む';
+                    sharePracticeBtn.classList.remove('hidden');
+                    sharePracticeBtn.classList.add('flex');
+                    nextBtn.textContent = '次の色へ進む';
                 } else {
                     retryBtn.classList.add('hidden');
-                    nextBtn.textContent = this.stageNumber < this.totalScoreAttackStages
-                        ? '次のステージへ進む'
-                        : '最終結果を見る';
+                    sharePracticeBtn.classList.add('hidden');
+                    sharePracticeBtn.classList.remove('flex');
+                    nextBtn.textContent = (this.stageNumber < this.totalStages) ? '次のステージへ' : '最終結果を見る';
                 }
 
+                this.sound.playResultRank(rank);
                 const modal = document.getElementById('result-modal');
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
@@ -1181,45 +1237,39 @@
                 modal.classList.remove('flex');
             }
 
-            // スコアアタック全3ステージ終了時の最終モーダル
-            showScoreAttackFinalModal() {
-                const previousBest = this.loadHighScore();
-                const isNewRecord = this.scoreAttackTotal >= previousBest && this.scoreAttackTotal > 0;
-
-                if (this.scoreAttackTotal > previousBest) {
-                    this.highScore = this.scoreAttackTotal;
-                    this.saveHighScore(this.highScore);
-                } else {
-                    this.highScore = previousBest;
-                }
-                this.updateHighScoreDisplays();
+            // スコアアタック最終結果表示
+            showFinalScoreAttackResult() {
+                const isNewRecord = this.saveHighScore(this.scoreAttackTotal);
 
                 document.getElementById('final-total-score').textContent = this.scoreAttackTotal;
                 document.getElementById('final-high-score').textContent = this.highScore;
 
-                const badge = document.getElementById('new-high-score-badge');
-                if (isNewRecord && this.scoreAttackRecords.length === this.totalScoreAttackStages) {
-                    badge.classList.remove('hidden');
+                const newRecordBadge = document.getElementById('final-new-record');
+                if (isNewRecord) {
+                    newRecordBadge.classList.remove('hidden');
                 } else {
-                    badge.classList.add('hidden');
+                    newRecordBadge.classList.add('hidden');
                 }
 
-                const list = document.getElementById('final-history-list');
-                list.innerHTML = '';
+                const listEl = document.getElementById('final-stage-list');
+                listEl.innerHTML = '';
                 this.scoreAttackRecords.forEach(rec => {
                     const row = document.createElement('div');
-                    row.className = 'flex items-center justify-between bg-slate-900/90 px-3.5 py-2 rounded-xl border border-slate-800 text-xs';
+                    row.className = 'bg-slate-900/90 px-3 py-2 rounded-xl border border-slate-800 flex items-center justify-between text-xs';
                     row.innerHTML = `
-                        <div class="flex items-center gap-2">
-                            <span class="font-mono-tech text-slate-400">STAGE ${rec.stage}</span>
-                            <span class="text-slate-200 font-bold">${rec.name}</span>
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="font-mono-tech text-slate-400 shrink-0">ST.${rec.stage}</span>
+                            <span class="w-4 h-4 rounded border border-white/25 shrink-0" style="background-color: rgb(${rec.targetRgb.r}, ${rec.targetRgb.g}, ${rec.targetRgb.b})"></span>
+                            <span class="text-slate-400">→</span>
+                            <span class="w-4 h-4 rounded border border-white/25 shrink-0" style="background-color: rgb(${rec.playerRgb.r}, ${rec.playerRgb.g}, ${rec.playerRgb.b})"></span>
+                            <span class="text-slate-200 font-bold truncate">${rec.label}</span>
                         </div>
-                        <div class="flex items-center gap-2 font-mono-tech">
-                            <span class="text-white font-bold">${rec.score} pts</span>
-                            <span class="font-black ${rec.rank === 'S' ? 'text-amber-400' : rec.rank === 'A' ? 'text-sky-400' : rec.rank === 'B' ? 'text-emerald-400' : 'text-slate-400'}">[${rec.rank}]</span>
+                        <div class="font-mono-tech shrink-0 ml-2">
+                            <span class="text-amber-300 font-bold">${rec.score}pts</span>
+                            <span class="text-slate-400 ml-1">[${rec.rank}]</span>
                         </div>
                     `;
-                    list.appendChild(row);
+                    listEl.appendChild(row);
                 });
 
                 const modal = document.getElementById('final-modal');
@@ -1228,10 +1278,315 @@
             }
 
             // ==========================================
-            // 4. メインループ＆スペクトル描画
+            // 4. シェア用リザルト画像生成 ＆ 共有処理
+            // ==========================================
+            generateShareCardCanvas(isScoreAttackFinal) {
+                const c = document.createElement('canvas');
+                c.width = 960;
+                c.height = 540;
+                const ctx = c.getContext('2d');
+
+                // 背景
+                const bgGrad = ctx.createLinearGradient(0, 0, 960, 540);
+                bgGrad.addColorStop(0, '#070b14');
+                bgGrad.addColorStop(1, '#0f172a');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, 960, 540);
+
+                // 外枠
+                ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.roundRect(16, 16, 928, 508, 24);
+                ctx.stroke();
+
+                // タイトルヘッダー
+                ctx.fillStyle = '#38bdf8';
+                ctx.font = 'bold 26px "Inter", sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('CONE SPECTRUM ―色再現ラボ―', 44, 62);
+
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = 'bold 16px "JetBrains Mono", monospace';
+                ctx.textAlign = 'right';
+                ctx.fillText(GAME_SHARE_URL, 916, 60);
+
+                // 上部：結果サマリー
+                if (!isScoreAttackFinal && this.lastResultData) {
+                    const d = this.lastResultData;
+                    ctx.textAlign = 'left';
+                    ctx.fillStyle = '#f8fafc';
+                    ctx.font = 'bold 24px "Noto Sans JP", sans-serif';
+                    ctx.fillText(`お題: ${d.label} (${d.targetWl}nm)  →  照射: ${d.playerWl}nm`, 44, 112);
+
+                    ctx.textAlign = 'right';
+                    ctx.fillStyle = '#fbbf24';
+                    ctx.font = 'bold 28px "JetBrains Mono", monospace';
+                    ctx.fillText(`RANK ${d.rank} / ${d.score} pts`, 916, 112);
+
+                    // 色比較見本（お題 vs 再現色）
+                    const drawSwatch = (x, title, rgb, wl) => {
+                        ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+                        ctx.beginPath();
+                        ctx.roundRect(x, 134, 420, 92, 14);
+                        ctx.fill();
+                        ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+
+                        ctx.fillStyle = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+                        ctx.beginPath();
+                        ctx.roundRect(x + 14, 146, 68, 68, 10);
+                        ctx.fill();
+                        ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+                        ctx.stroke();
+
+                        ctx.fillStyle = '#94a3b8';
+                        ctx.font = 'bold 14px "Noto Sans JP", sans-serif';
+                        ctx.textAlign = 'left';
+                        ctx.fillText(title, x + 98, 172);
+
+                        ctx.fillStyle = '#ffffff';
+                        ctx.font = 'bold 22px "JetBrains Mono", monospace';
+                        ctx.fillText(`${wl} nm`, x + 98, 204);
+                    };
+                    drawSwatch(44, 'TARGET (お題の色)', d.targetRgb, d.targetWl);
+                    drawSwatch(496, 'YOUR BEAM (再現した色)', d.playerRgb, d.playerWl);
+                } else {
+                    // スコアアタック最終結果サマリー
+                    ctx.textAlign = 'left';
+                    ctx.fillStyle = '#fbbf24';
+                    ctx.font = 'bold 28px "JetBrains Mono", monospace';
+                    ctx.fillText(`SCORE ATTACK TOTAL: ${this.scoreAttackTotal} / 300 pts`, 44, 112);
+
+                    // 3ステージの色比較チップ
+                    this.scoreAttackRecords.forEach((rec, idx) => {
+                        const bx = 44 + idx * 296;
+                        ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+                        ctx.beginPath();
+                        ctx.roundRect(bx, 134, 280, 92, 14);
+                        ctx.fill();
+                        ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+
+                        // お題色＆再現色
+                        ctx.fillStyle = `rgb(${rec.targetRgb.r}, ${rec.targetRgb.g}, ${rec.targetRgb.b})`;
+                        ctx.beginPath();
+                        ctx.roundRect(bx + 12, 148, 32, 64, 6);
+                        ctx.fill();
+
+                        ctx.fillStyle = `rgb(${rec.playerRgb.r}, ${rec.playerRgb.g}, ${rec.playerRgb.b})`;
+                        ctx.beginPath();
+                        ctx.roundRect(bx + 50, 148, 32, 64, 6);
+                        ctx.fill();
+
+                        ctx.fillStyle = '#f8fafc';
+                        ctx.font = 'bold 14px "Noto Sans JP", sans-serif';
+                        ctx.textAlign = 'left';
+                        ctx.fillText(`ST.${rec.stage} ${rec.label}`, bx + 94, 168);
+
+                        ctx.fillStyle = '#38bdf8';
+                        ctx.font = '13px "JetBrains Mono", monospace';
+                        ctx.fillText(`${rec.targetWl}nm → ${rec.playerWl}nm`, bx + 94, 190);
+
+                        ctx.fillStyle = '#fbbf24';
+                        ctx.font = 'bold 15px "JetBrains Mono", monospace';
+                        ctx.fillText(`${rec.score}pts [${rec.rank}]`, bx + 94, 212);
+                    });
+                }
+
+                // 下部：作用スペクトルグラフ＆照射マーカー描画
+                const gx = 44, gy = 248, gw = 872, gh = 220;
+                ctx.fillStyle = '#04070e';
+                ctx.beginPath();
+                ctx.roundRect(gx, gy, gw, gh, 16);
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(148, 163, 184, 0.2)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                const padL = gx + 36, padR = gx + gw - 24, padT = gy + 24, padB = gy + gh - 38;
+                const plotW = padR - padL, plotH = padB - padT;
+                const wlToX = (wl) => padL + ((wl - MIN_WL) / (MAX_WL - MIN_WL)) * plotW;
+                const valToY = (v) => padT + plotH - v * plotH;
+
+                // 虹色スペクトルバー
+                const specGrad = ctx.createLinearGradient(padL, 0, padR, 0);
+                for (let i = 0; i <= 20; i++) {
+                    const t = i / 20;
+                    const col = wavelengthToBeamColor(MIN_WL + t * (MAX_WL - MIN_WL));
+                    specGrad.addColorStop(t, `rgb(${col.r}, ${col.g}, ${col.b})`);
+                }
+                ctx.fillStyle = specGrad;
+                ctx.beginPath();
+                ctx.roundRect(padL, padB + 4, plotW, 14, 4);
+                ctx.fill();
+
+                // S・M・L曲線
+                const drawShareCurve = (key, stroke, fill) => {
+                    ctx.beginPath();
+                    ctx.moveTo(padL, valToY(0));
+                    for (let i = 0; i <= 120; i++) {
+                        const wl = MIN_WL + (i / 120) * (MAX_WL - MIN_WL);
+                        const resp = getConeResponse(wl);
+                        ctx.lineTo(wlToX(wl), valToY(resp[key]));
+                    }
+                    ctx.lineTo(padR, valToY(0));
+                    ctx.closePath();
+                    ctx.fillStyle = fill;
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    for (let i = 0; i <= 120; i++) {
+                        const wl = MIN_WL + (i / 120) * (MAX_WL - MIN_WL);
+                        const resp = getConeResponse(wl);
+                        const x = wlToX(wl), y = valToY(resp[key]);
+                        if (i === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.strokeStyle = stroke;
+                    ctx.lineWidth = 2.5;
+                    ctx.stroke();
+                };
+                drawShareCurve('s', '#38bdf8', 'rgba(56, 189, 248, 0.16)');
+                drawShareCurve('m', '#34d399', 'rgba(52, 211, 153, 0.16)');
+                drawShareCurve('l', '#fb7185', 'rgba(251, 113, 133, 0.16)');
+
+                // 照射位置と正解位置のマーカープロット
+                const markers = isScoreAttackFinal ? this.scoreAttackRecords : (this.lastResultData ? [this.lastResultData] : []);
+                markers.forEach((m, idx) => {
+                    // 正解位置（破線）
+                    const tx = wlToX(m.targetWl);
+                    ctx.save();
+                    ctx.setLineDash([4, 4]);
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+                    ctx.lineWidth = 1.8;
+                    ctx.beginPath();
+                    ctx.moveTo(tx, padT);
+                    ctx.lineTo(tx, padB + 16);
+                    ctx.stroke();
+                    ctx.restore();
+
+                    // プレイヤー照射レーザー（実線）
+                    const px = wlToX(m.playerWl);
+                    const bCol = wavelengthToBeamColor(m.playerWl);
+                    ctx.strokeStyle = `rgb(${bCol.r}, ${bCol.g}, ${bCol.b})`;
+                    ctx.lineWidth = 3.5;
+                    ctx.beginPath();
+                    ctx.moveTo(px, padT);
+                    ctx.lineTo(px, padB + 16);
+                    ctx.stroke();
+
+                    // 波長ラベルバッジ
+                    const labelText = isScoreAttackFinal ? `#${idx + 1}: ${m.playerWl}nm` : `${m.playerWl}nm`;
+                    ctx.font = 'bold 13px "JetBrains Mono", monospace';
+                    const tw = ctx.measureText(labelText).width + 14;
+                    const bx = Math.min(padR - tw, Math.max(padL, px - tw / 2));
+                    const by = padT + (idx % 2) * 24;
+                    ctx.fillStyle = 'rgba(15, 23, 42, 0.92)';
+                    ctx.beginPath();
+                    ctx.roundRect(bx, by, tw, 20, 6);
+                    ctx.fill();
+                    ctx.strokeStyle = `rgb(${bCol.r}, ${bCol.g}, ${bCol.b})`;
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(labelText, bx + tw / 2, by + 15);
+                });
+
+                return c;
+            }
+
+            async executeShare(shareText, fileName, isScoreAttackFinal) {
+                const cardCanvas = this.generateShareCardCanvas(isScoreAttackFinal);
+
+                cardCanvas.toBlob(async (blob) => {
+                    if (!blob) return;
+                    const file = new File([blob], fileName, { type: 'image/png' });
+
+                    // Web Share API（画像＋テキスト＋URL共有対応端末）
+                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                        try {
+                            await navigator.share({
+                                title: 'CONE SPECTRUM ―色再現ラボ―',
+                                text: shareText,
+                                files: [file]
+                            });
+                            return;
+                        } catch (err) {
+                            if (err && err.name === 'AbortError') return;
+                        }
+                    }
+
+                    // フォールバック：画像ダウンロード＋テキスト＆URLをクリップボードへコピー
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+                    const textarea = document.createElement('textarea');
+                    textarea.value = shareText;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try {
+                        document.execCommand('copy');
+                    } catch (e) {}
+                    document.body.removeChild(textarea);
+
+                    this.showToast('結果画像を保存し、シェア文とURLをコピーしました！');
+                }, 'image/png');
+            }
+
+            sharePracticeResult() {
+                if (!this.lastResultData) return;
+                const d = this.lastResultData;
+                const text =
+                    `【CONE SPECTRUM ―色再現ラボ―】\n` +
+                    `お題「${d.label} (${d.targetWl}nm)」に ${d.playerWl}nm の光を照射！\n` +
+                    `結果：ランク ${d.rank}（${d.score}点）\n` +
+                    `人間の3つの錐体細胞（S・M・L）を刺激して色を再現する視覚科学ゲーム！\n` +
+                    `${GAME_SHARE_URL}\n#CONESPECTRUM #色再現ラボ`;
+                this.executeShare(text, `cone_spectrum_${d.playerWl}nm.png`, false);
+            }
+
+            shareScoreAttackResult() {
+                const detail = this.scoreAttackRecords
+                    .map(r => `ST.${r.stage} ${r.label}: ${r.playerWl}nm (${r.score}点)`)
+                    .join(' / ');
+                const text =
+                    `【CONE SPECTRUM ―色再現ラボ―】\n` +
+                    `スコアアタック最終結果：${this.scoreAttackTotal} / 300点！（ハイスコア: ${this.highScore}点）\n` +
+                    `[${detail}]\n` +
+                    `光の波長を見極めてお題の色を再現しよう！\n` +
+                    `${GAME_SHARE_URL}\n#CONESPECTRUM #色再現ラボ`;
+                this.executeShare(text, `cone_spectrum_scoreattack_${this.scoreAttackTotal}pts.png`, true);
+            }
+
+            showToast(msg) {
+                const toast = document.getElementById('share-toast');
+                document.getElementById('share-toast-text').textContent = msg;
+                toast.classList.remove('hidden');
+                toast.classList.add('flex');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                    toast.classList.remove('flex');
+                }, 3200);
+            }
+
+            // ==========================================
+            // 5. メインループ＆Canvas描画
             // ==========================================
             update(dt) {
-                if (!this.isScanning) return;
+                if (!this.isPlaying || this.isLocked) return;
 
                 this.currentWavelength += this.scanDirection * this.scanSpeed * dt;
                 if (this.currentWavelength >= MAX_WL) {
@@ -1253,8 +1608,8 @@
 
                 const padLeft = 36;
                 const padRight = 16;
-                const padTop = 24;
-                const rainbowBarHeight = 22;
+                const padTop = 22;
+                const rainbowBarHeight = 20;
                 const padBottom = 38;
 
                 const plotW = w - padLeft - padRight;
@@ -1263,23 +1618,21 @@
                 const wlToX = (wl) => padLeft + ((wl - MIN_WL) / (MAX_WL - MIN_WL)) * plotW;
                 const valToY = (val) => padTop + plotH - val * plotH;
 
-                // 1. 背景グリッド
+                // 背景グリッド
                 ctx.strokeStyle = 'rgba(148, 163, 184, 0.12)';
                 ctx.lineWidth = 1;
                 ctx.font = '10px "JetBrains Mono", monospace';
-                ctx.fillStyle = 'rgba(148, 163, 184, 0.55)';
+                ctx.fillStyle = 'rgba(148, 163, 184, 0.6)';
                 ctx.textAlign = 'right';
                 ctx.textBaseline = 'middle';
 
-                for (let p = 0; p <= 100; p += 25) {
+                for (let p = 0; p <= 100; p += 50) {
                     const y = valToY(p / 100);
                     ctx.beginPath();
                     ctx.moveTo(padLeft, y);
                     ctx.lineTo(padLeft + plotW, y);
                     ctx.stroke();
-                    if (p % 50 === 0) {
-                        ctx.fillText(`${p}%`, padLeft - 6, y);
-                    }
+                    ctx.fillText(`${p}%`, padLeft - 6, y);
                 }
 
                 ctx.textAlign = 'center';
@@ -1290,14 +1643,14 @@
                     ctx.moveTo(x, padTop);
                     ctx.lineTo(x, padTop + plotH);
                     ctx.stroke();
-                    ctx.fillText(`${wl}`, x, padTop + plotH + rainbowBarHeight + 4);
+                    ctx.fillText(`${wl}`, x, padTop + plotH + rainbowBarHeight + 5);
                 }
 
-                // 2. 下部スペクトル虹色バー
-                const barY = padTop + plotH + 2;
+                // 可視光スペクトルバー
+                const barY = padTop + plotH + 3;
                 const specGrad = ctx.createLinearGradient(padLeft, 0, padLeft + plotW, 0);
-                for (let i = 0; i <= 24; i++) {
-                    const t = i / 24;
+                for (let i = 0; i <= 20; i++) {
+                    const t = i / 20;
                     const wl = MIN_WL + t * (MAX_WL - MIN_WL);
                     const c = wavelengthToBeamColor(wl);
                     specGrad.addColorStop(t, `rgb(${c.r}, ${c.g}, ${c.b})`);
@@ -1307,11 +1660,11 @@
                 ctx.roundRect(padLeft, barY, plotW, rainbowBarHeight - 4, 4);
                 ctx.fill();
 
-                // 3. 3つの錐体細胞（S・M・L）の作用スペクトル曲線
+                // S・M・L 錐体細胞曲線
                 const drawCurve = (key, strokeColor, fillColor) => {
                     ctx.beginPath();
                     ctx.moveTo(padLeft, valToY(0));
-                    const steps = 130;
+                    const steps = 120;
                     for (let i = 0; i <= steps; i++) {
                         const wl = MIN_WL + (i / steps) * (MAX_WL - MIN_WL);
                         const resp = getConeResponse(wl);
@@ -1344,108 +1697,84 @@
                 ctx.font = 'bold 11px "Inter", sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillStyle = '#7dd3fc';
-                ctx.fillText('S錐体', wlToX(435), valToY(1) - 13);
+                ctx.fillText('S錐体', wlToX(435), valToY(1) - 14);
                 ctx.fillStyle = '#6ee7b7';
-                ctx.fillText('M錐体', wlToX(532), valToY(1) - 13);
+                ctx.fillText('M錐体', wlToX(532), valToY(1) - 14);
                 ctx.fillStyle = '#fda4af';
-                ctx.fillText('L錐体', wlToX(582), valToY(1) - 13);
+                ctx.fillText('L錐体', wlToX(582), valToY(1) - 14);
 
-                // 4. レーザービーム描画（移動中 or 照射ロック中）
-                const activeWl = this.lockedShot ? this.lockedShot.wl : this.currentWavelength;
+                // レーザーカーソル（通常移動中 or 照射ロック強調表示）
+                const activeWl = this.isLocked && this.lockedWavelength !== null ? this.lockedWavelength : this.currentWavelength;
                 const curX = wlToX(activeWl);
                 const beam = wavelengthToBeamColor(activeWl);
                 const beamCss = `rgb(${beam.r}, ${beam.g}, ${beam.b})`;
                 const curResp = getConeResponse(activeWl);
 
-                if (this.lockedShot) {
-                    // 照射ロック中の強調エフェクト（1.2秒間表示）
-                    const elapsed = (performance.now() - this.lockedShot.lockedAt) / 1000;
-                    const rippleProgress = Math.min(1, elapsed / 0.65);
+                const glowWidth = this.isLocked ? 28 : 16;
+                const glowGrad = ctx.createLinearGradient(curX - glowWidth, 0, curX + glowWidth, 0);
+                glowGrad.addColorStop(0, `rgba(${beam.r}, ${beam.g}, ${beam.b}, 0)`);
+                glowGrad.addColorStop(0.5, `rgba(${beam.r}, ${beam.g}, ${beam.b}, ${this.isLocked ? 0.45 : 0.3})`);
+                glowGrad.addColorStop(1, `rgba(${beam.r}, ${beam.g}, ${beam.b}, 0)`);
+                ctx.fillStyle = glowGrad;
+                ctx.fillRect(curX - glowWidth, padTop, glowWidth * 2, plotH + rainbowBarHeight - 2);
 
-                    // 広がり続ける波紋リング
-                    const rippleRadius = 10 + rippleProgress * 44;
-                    const rippleAlpha = Math.max(0, 1 - rippleProgress);
-                    ctx.save();
-                    ctx.strokeStyle = `rgba(${beam.r}, ${beam.g}, ${beam.b}, ${rippleAlpha})`;
-                    ctx.lineWidth = 3;
-                    ctx.beginPath();
-                    ctx.arc(curX, barY + (rainbowBarHeight - 4) / 2, rippleRadius, 0, Math.PI * 2);
-                    ctx.stroke();
-                    ctx.restore();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = this.isLocked ? 3.5 : 2;
+                ctx.shadowColor = beamCss;
+                ctx.shadowBlur = this.isLocked ? 18 : 10;
+                ctx.beginPath();
+                ctx.moveTo(curX, padTop);
+                ctx.lineTo(curX, padTop + plotH + rainbowBarHeight - 2);
+                ctx.stroke();
+                ctx.shadowBlur = 0;
 
-                    // 太いロックレーザー光彩
-                    const lockGlow = ctx.createLinearGradient(curX - 28, 0, curX + 28, 0);
-                    lockGlow.addColorStop(0, `rgba(${beam.r}, ${beam.g}, ${beam.b}, 0)`);
-                    lockGlow.addColorStop(0.5, `rgba(${beam.r}, ${beam.g}, ${beam.b}, 0.52)`);
-                    lockGlow.addColorStop(1, `rgba(${beam.r}, ${beam.g}, ${beam.b}, 0)`);
-                    ctx.fillStyle = lockGlow;
-                    ctx.fillRect(curX - 28, padTop, 56, plotH + rainbowBarHeight - 2);
-
-                    ctx.strokeStyle = '#ffffff';
-                    ctx.lineWidth = 3.5;
-                    ctx.shadowColor = beamCss;
-                    ctx.shadowBlur = 16;
-                    ctx.beginPath();
-                    ctx.moveTo(curX, padTop);
-                    ctx.lineTo(curX, padTop + plotH + rainbowBarHeight - 2);
-                    ctx.stroke();
-                    ctx.shadowBlur = 0;
-
-                    // 照射波長バッジ表示（例: 578 nm）
-                    const badgeW = 64;
-                    const badgeH = 20;
-                    const badgeX = Math.min(w - padRight - badgeW, Math.max(padLeft, curX - badgeW / 2));
-                    const badgeY = 3;
-
-                    ctx.fillStyle = '#0f172a';
-                    ctx.strokeStyle = beamCss;
-                    ctx.lineWidth = 1.8;
-                    ctx.beginPath();
-                    ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 6);
-                    ctx.fill();
-                    ctx.stroke();
-
-                    ctx.fillStyle = '#ffffff';
-                    ctx.font = 'bold 11px "JetBrains Mono", monospace';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText(`${activeWl} nm`, badgeX + badgeW / 2, badgeY + badgeH / 2 + 0.5);
-                } else {
-                    // 通常スキャン中のレーザービーム
-                    const glowGrad = ctx.createLinearGradient(curX - 18, 0, curX + 18, 0);
-                    glowGrad.addColorStop(0, `rgba(${beam.r}, ${beam.g}, ${beam.b}, 0)`);
-                    glowGrad.addColorStop(0.5, `rgba(${beam.r}, ${beam.g}, ${beam.b}, 0.34)`);
-                    glowGrad.addColorStop(1, `rgba(${beam.r}, ${beam.g}, ${beam.b}, 0)`);
-                    ctx.fillStyle = glowGrad;
-                    ctx.fillRect(curX - 18, padTop, 36, plotH + rainbowBarHeight - 2);
-
-                    ctx.strokeStyle = '#ffffff';
-                    ctx.lineWidth = 2.2;
-                    ctx.shadowColor = beamCss;
-                    ctx.shadowBlur = 12;
-                    ctx.beginPath();
-                    ctx.moveTo(curX, padTop);
-                    ctx.lineTo(curX, padTop + plotH + rainbowBarHeight - 2);
-                    ctx.stroke();
-                    ctx.shadowBlur = 0;
-                }
-
-                // 曲線上の交点ドット
-                const dotRadius = this.lockedShot ? 6.5 : 5;
+                // 交点ドット
                 const drawIntersectDot = (val, color) => {
                     const y = valToY(val);
                     ctx.beginPath();
-                    ctx.arc(curX, y, dotRadius, 0, Math.PI * 2);
+                    ctx.arc(curX, y, this.isLocked ? 6.5 : 4.5, 0, Math.PI * 2);
                     ctx.fillStyle = color;
                     ctx.fill();
-                    ctx.lineWidth = 1.8;
+                    ctx.lineWidth = 1.5;
                     ctx.strokeStyle = '#ffffff';
                     ctx.stroke();
                 };
-
                 drawIntersectDot(curResp.s, '#38bdf8');
                 drawIntersectDot(curResp.m, '#34d399');
                 drawIntersectDot(curResp.l, '#fb7185');
+
+                // ロック中は波紋リング＆照射波長バッジを表示
+                if (this.isLocked) {
+                    const elapsed = (performance.now() - this.lockTimestamp) / 1000;
+                    const rippleRadius = 10 + (elapsed * 45) % 34;
+                    const rippleAlpha = Math.max(0, 1 - ((elapsed * 45) % 34) / 34);
+
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${rippleAlpha * 0.8})`;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(curX, padTop + plotH * 0.5, rippleRadius, 0, Math.PI * 2);
+                    ctx.stroke();
+
+                    // 波長バッジ
+                    const badgeText = `${activeWl} nm`;
+                    ctx.font = 'bold 12px "JetBrains Mono", monospace';
+                    const textW = ctx.measureText(badgeText).width + 16;
+                    const badgeX = Math.min(padLeft + plotW - textW, Math.max(padLeft, curX - textW / 2));
+                    const badgeY = padTop + 6;
+
+                    ctx.fillStyle = 'rgba(15, 23, 42, 0.92)';
+                    ctx.beginPath();
+                    ctx.roundRect(badgeX, badgeY, textW, 22, 6);
+                    ctx.fill();
+                    ctx.strokeStyle = beamCss;
+                    ctx.lineWidth = 1.8;
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(badgeText, badgeX + textW / 2, badgeY + 11);
+                }
             }
 
             loop(now) {
