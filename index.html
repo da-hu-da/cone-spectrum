@@ -915,18 +915,56 @@
             };
         }
 
-        // 単一波長で100%再現可能なお題リスト
+        // 単一波長で100%再現可能なお題リスト（全48色）
         const SINGLE_WAVELENGTH_PRESETS = [
+            { label: "ディープバイオレット", wl: 400 },
+            { label: "インディゴ", wl: 410 },
             { label: "バイオレットブルー", wl: 418 },
+            { label: "ロイヤルブルー", wl: 425 },
+            { label: "ウルトラマリン", wl: 432 },
             { label: "コバルトブルー", wl: 438 },
+            { label: "サファイアブルー", wl: 444 },
+            { label: "ネイビーブルー", wl: 450 },
+            { label: "アジュールブルー", wl: 458 },
             { label: "セルリアンブルー", wl: 465 },
+            { label: "ドジャーブルー", wl: 472 },
+            { label: "スカイブルー", wl: 478 },
+            { label: "ターコイズブルー", wl: 485 },
             { label: "シアン（青緑）", wl: 492 },
+            { label: "アクアマリン", wl: 498 },
+            { label: "ビリジアン", wl: 504 },
+            { label: "ミントグリーン", wl: 510 },
+            { label: "ジェイドグリーン", wl: 516 },
             { label: "エメラルドグリーン", wl: 525 },
+            { label: "マラカイトグリーン", wl: 532 },
+            { label: "フォレストグリーン", wl: 538 },
             { label: "リーフグリーン", wl: 548 },
+            { label: "アップルグリーン", wl: 554 },
+            { label: "ライムグリーン", wl: 560 },
+            { label: "シャルトリューズ", wl: 565 },
+            { label: "レモンイエロー", wl: 570 },
             { label: "ゴールデンイエロー", wl: 575 },
+            { label: "カナリアイエロー", wl: 579 },
+            { label: "サフランイエロー", wl: 583 },
+            { label: "アンバー（琥珀色）", wl: 588 },
+            { label: "マリーゴールド", wl: 592 },
+            { label: "マンダリンオレンジ", wl: 597 },
             { label: "サンセットオレンジ", wl: 602 },
+            { label: "タンジェリン", wl: 607 },
+            { label: "パンプキンオレンジ", wl: 612 },
+            { label: "キャロットオレンジ", wl: 617 },
+            { label: "バーミリオン（朱色）", wl: 622 },
+            { label: "コーラルレッド", wl: 627 },
             { label: "スカーレットレッド", wl: 632 },
-            { label: "ディープレッド", wl: 665 }
+            { label: "トマトレッド", wl: 638 },
+            { label: "ポピーレッド", wl: 644 },
+            { label: "カーマイン", wl: 650 },
+            { label: "クリムゾン", wl: 657 },
+            { label: "ディープレッド", wl: 665 },
+            { label: "ルビーレッド", wl: 675 },
+            { label: "ガーネットレッド", wl: 688 },
+            { label: "バーガンディ", wl: 702 },
+            { label: "ボルドー", wl: 718 }
         ];
 
         // ==========================================
@@ -1514,11 +1552,11 @@
                 const wlToX = (wl) => padL + ((wl - MIN_WL) / (MAX_WL - MIN_WL)) * plotW;
                 const valToY = (v) => padT + plotH - v * plotH;
 
-                // 虹色スペクトルバー
+                // 虹色スペクトルバー（照射時の知覚色と対応）
                 const specGrad = ctx.createLinearGradient(padL, 0, padR, 0);
-                for (let i = 0; i <= 20; i++) {
-                    const t = i / 20;
-                    const col = wavelengthToBeamColor(MIN_WL + t * (MAX_WL - MIN_WL));
+                for (let i = 0; i <= 40; i++) {
+                    const t = i / 40;
+                    const col = lmsToRgb(getConeResponse(MIN_WL + t * (MAX_WL - MIN_WL)));
                     specGrad.addColorStop(t, `rgb(${col.r}, ${col.g}, ${col.b})`);
                 }
                 ctx.fillStyle = specGrad;
@@ -1745,13 +1783,13 @@
                     ctx.fillText(`${wl}`, x, padTop + plotH + rainbowBarHeight + 5);
                 }
 
-                // 可視光スペクトルバー
+                // 可視光スペクトルバー（照射時の知覚色と対応）
                 const barY = padTop + plotH + 3;
                 const specGrad = ctx.createLinearGradient(padLeft, 0, padLeft + plotW, 0);
-                for (let i = 0; i <= 20; i++) {
-                    const t = i / 20;
+                for (let i = 0; i <= 40; i++) {
+                    const t = i / 40;
                     const wl = MIN_WL + t * (MAX_WL - MIN_WL);
-                    const c = wavelengthToBeamColor(wl);
+                    const c = lmsToRgb(getConeResponse(wl));
                     specGrad.addColorStop(t, `rgb(${c.r}, ${c.g}, ${c.b})`);
                 }
                 ctx.fillStyle = specGrad;
