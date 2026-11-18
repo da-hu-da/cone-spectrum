@@ -155,6 +155,16 @@
          タイトル画面（シンプル構成）
          ========================================== -->
     <div id="title-screen" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex flex-col items-center justify-center p-4 overflow-y-auto">
+        <!-- タイトル画面右上：音量オン／オフボタン -->
+        <button id="btn-mute-title" class="fixed top-4 right-4 z-10 p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-slate-300 transition shadow-lg" aria-label="サウンド切替">
+            <svg id="icon-sound-on-title" class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+            </svg>
+            <svg id="icon-sound-off-title" class="w-5 h-5 text-slate-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+            </svg>
+        </button>
+
         <div class="max-w-md w-full flex flex-col items-center text-center my-auto py-4">
             <!-- ロゴSVG：RGB（赤・緑・青）ベン図・加法混色（中央純白） -->
             <div class="w-28 h-28 sm:w-32 sm:h-32 mb-4 rounded-3xl bg-slate-950 border border-slate-700/80 shadow-[0_0_40px_rgba(255,255,255,0.12)] flex items-center justify-center relative overflow-hidden">
@@ -738,6 +748,93 @@
                     });
                 }
             }
+
+            // スコアアタック最終総スコア発表SE（総スコアに応じた3段階の豪華さ）
+            playFinalTotalScore(totalScore) {
+                if (this.muted) return;
+                this.init();
+                const now = this.ctx.currentTime;
+
+                if (totalScore < 220) {
+                    // 第1段階（〜219点）：落ち着いた3音達成チャイム
+                    [392.00, 493.88, 587.33].forEach((freq, i) => {
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        osc.type = 'triangle';
+                        const t = now + i * 0.11;
+                        osc.frequency.setValueAtTime(freq, t);
+                        gain.gain.setValueAtTime(0.18, t);
+                        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.42);
+                        osc.connect(gain);
+                        gain.connect(this.ctx.destination);
+                        osc.start(t);
+                        osc.stop(t + 0.44);
+                    });
+                } else if (totalScore < 275) {
+                    // 第2段階（220〜274点）：華やかな5音上昇ファンファーレ＋オクターブ倍音＆和音
+                    const notes = [440.00, 554.37, 659.25, 880.00, 1108.73];
+                    notes.forEach((freq, i) => {
+                        const t = now + i * 0.08;
+                        [1, 2].forEach((mult, mIdx) => {
+                            const osc = this.ctx.createOscillator();
+                            const gain = this.ctx.createGain();
+                            osc.type = mIdx === 0 ? 'triangle' : 'sine';
+                            osc.frequency.setValueAtTime(freq * mult, t);
+                            gain.gain.setValueAtTime(mIdx === 0 ? 0.18 : 0.07, t);
+                            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+                            osc.connect(gain);
+                            gain.connect(this.ctx.destination);
+                            osc.start(t);
+                            osc.stop(t + 0.52);
+                        });
+                    });
+
+                    const chordStart = now + 0.42;
+                    [440.00, 554.37, 659.25, 880.00].forEach((freq) => {
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, chordStart);
+                        gain.gain.setValueAtTime(0.11, chordStart);
+                        gain.gain.exponentialRampToValueAtTime(0.001, chordStart + 0.7);
+                        osc.connect(gain);
+                        gain.connect(this.ctx.destination);
+                        osc.start(chordStart);
+                        osc.stop(chordStart + 0.72);
+                    });
+                } else {
+                    // 第3段階（275〜300点）：高速上昇アルペジオ＋重厚なメジャー9th和音＋シマーベル
+                    const arp = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98, 2093.00];
+                    arp.forEach((freq, i) => {
+                        const t = now + i * 0.055;
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        osc.type = i >= 4 ? 'sine' : 'triangle';
+                        osc.frequency.setValueAtTime(freq, t);
+                        gain.gain.setValueAtTime(0.20, t);
+                        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+                        osc.connect(gain);
+                        gain.connect(this.ctx.destination);
+                        osc.start(t);
+                        osc.stop(t + 0.62);
+                    });
+
+                    const chordStart = now + 0.40;
+                    const grandChord = [261.63, 523.25, 659.25, 783.99, 987.77, 1174.66, 1567.98, 2093.00];
+                    grandChord.forEach((freq, idx) => {
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        osc.type = idx >= 5 ? 'sine' : 'triangle';
+                        osc.frequency.setValueAtTime(freq, chordStart);
+                        gain.gain.setValueAtTime(idx >= 5 ? 0.08 : 0.11, chordStart);
+                        gain.gain.exponentialRampToValueAtTime(0.0008, chordStart + 1.05);
+                        osc.connect(gain);
+                        gain.connect(this.ctx.destination);
+                        osc.start(chordStart);
+                        osc.stop(chordStart + 1.08);
+                    });
+                }
+            }
         }
 
         // ==========================================
@@ -947,12 +1044,16 @@
                     }
                 });
 
-                // ミュート切替
-                document.getElementById('btn-mute').addEventListener('click', () => {
+                // ミュート切替（タイトル画面・プレイ画面連動）
+                const handleToggleMute = () => {
                     const isMuted = this.sound.toggleMute();
                     document.getElementById('icon-sound-on').classList.toggle('hidden', isMuted);
                     document.getElementById('icon-sound-off').classList.toggle('hidden', !isMuted);
-                });
+                    document.getElementById('icon-sound-on-title').classList.toggle('hidden', isMuted);
+                    document.getElementById('icon-sound-off-title').classList.toggle('hidden', !isMuted);
+                };
+                document.getElementById('btn-mute').addEventListener('click', handleToggleMute);
+                document.getElementById('btn-mute-title').addEventListener('click', handleToggleMute);
 
                 // 結果モーダル内ボタン
                 document.getElementById('btn-retry-stage').addEventListener('click', () => {
@@ -1272,6 +1373,8 @@
                     listEl.appendChild(row);
                 });
 
+                this.sound.playFinalTotalScore(this.scoreAttackTotal);
+
                 const modal = document.getElementById('final-modal');
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
@@ -1559,13 +1662,9 @@
             }
 
             shareScoreAttackResult() {
-                const detail = this.scoreAttackRecords
-                    .map(r => `ST.${r.stage} ${r.label}: ${r.playerWl}nm (${r.score}点)`)
-                    .join(' / ');
                 const text =
                     `【CONE SPECTRUM ―色再現ラボ―】\n` +
                     `スコアアタック最終結果：${this.scoreAttackTotal} / 300点！（ハイスコア: ${this.highScore}点）\n` +
-                    `[${detail}]\n` +
                     `光の波長を見極めてお題の色を再現しよう！\n` +
                     `${GAME_SHARE_URL}\n#CONESPECTRUM #色再現ラボ`;
                 this.executeShare(text, `cone_spectrum_scoreattack_${this.scoreAttackTotal}pts.png`, true);
